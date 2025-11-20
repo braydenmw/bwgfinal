@@ -15,6 +15,11 @@ import GlobalComparativeEngine from './GlobalComparativeEngine.tsx';
 import StakeholderPerspectiveModule from './StakeholderPerspectiveModule.tsx';
 import PredictiveGrowthModel from './PredictiveGrowthModel.tsx';
 import AlternativeLocationMatcher from './AlternativeLocationMatcher.tsx';
+import DueDiligenceSuite from './DueDiligenceSuite.tsx';
+import PartnerIntelligenceDashboard from './PartnerIntelligenceDashboard.tsx';
+import RelationshipBuilder from './RelationshipBuilder.tsx';
+import RegionalComfortIndex from './RegionalComfortIndex.tsx';
+import { GLOBAL_CITY_DATABASE } from '../constants.tsx';
 import IntelligenceDashboard from './IntelligenceDashboard.tsx';
 import { runEnhancedNSILAnalysis, getSmartTradeOfficerGuidance } from './NSILEngine.ts';
 import { ReviewStep } from './ReviewStep.tsx';
@@ -63,9 +68,9 @@ const WIZARD_STEPS = [
     { id: 2, title: 'Strategic Context', page: 1 },
     { id: 3, title: 'Partnership & Objectives', page: 1 },
     { id: 4, title: 'Analysis Configuration', page: 2 },
-    { id: 5, title: 'Risk Assessment', page: 2 },
-    { id: 6, title: 'SEAM Architecture', page: 2 },
-    { id: 7, title: 'Technology Transfer', page: 3 },
+    { id: 5, title: 'Due Diligence & Risk', page: 2 },
+    { id: 6, title: 'Partner Intelligence', page: 2 },
+    { id: 7, 'title': 'Relationship Building', page: 3 },
     { id: 8, title: 'Implementation Roadmap', page: 3 },
     { id: 9, title: 'Resource Allocation', page: 3 },
     { id: 10, title: 'Performance Metrics', page: 4 },
@@ -444,237 +449,68 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
                         );
                         case 5: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Comprehensive risk assessment using NSIL AI analysis framework.</p>
-                                <div className="space-y-6">
-                                    {!nsilAnalysis ? (
-                                        <div className="text-center py-8">
-                                            <button
-                                                onClick={() => {
-                                                    const analysis = runEnhancedNSILAnalysis(params);
-                                                    setNsIlAnalysis(analysis);
-                                                }}
-                                                className="px-6 py-3 bg-nexus-accent-cyan text-white font-semibold rounded-lg hover:bg-nexus-accent-cyan-dark transition-colors"
-                                            >
-                                                Run NSIL Risk Assessment
-                                            </button>
-                                            <p className="text-xs text-nexus-text-muted mt-4">Click to generate comprehensive risk analysis using AI-powered NSIL framework</p>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-6">
-                                            <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                                <h4 className="font-semibold text-nexus-accent-cyan mb-2">NSIL Risk Assessment Results</h4>
-                                                <div className="grid md:grid-cols-3 gap-4 mb-4">
-                                                    <div className="text-center">
-                                                        <div className="text-2xl font-bold text-nexus-accent-brown">{nsilAnalysis.urpIndex}</div>
-                                                        <div className="text-xs text-nexus-text-secondary">URP Index</div>
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <div className="text-2xl font-bold text-red-400">{nsilAnalysis.agerRiskScore}</div>
-                                                        <div className="text-xs text-nexus-text-secondary">Risk Score</div>
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <div className="text-2xl font-bold text-green-400">{nsilAnalysis.gsmPartnerMatches}</div>
-                                                        <div className="text-xs text-nexus-text-secondary">Partner Matches</div>
-                                                    </div>
-                                                </div>
-                                                <p className="text-sm text-nexus-text-secondary">{nsilAnalysis.summary}</p>
-                                            </div>
-
-                                            <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                                <h4 className="font-semibold text-nexus-accent-cyan mb-2">Key Risk Factors</h4>
-                                                <ul className="space-y-2">
-                                                    {nsilAnalysis.keyRisks.map((risk: string, index: number) => (
-                                                        <li key={index} className="flex items-start gap-2 text-sm">
-                                                            <span className="text-red-400 mt-1">⚠️</span>
-                                                            <span className="text-nexus-text-secondary">{risk}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Conduct automated due diligence on potential partners to identify legal, financial, and reputational risks.</p>
+                                <DueDiligenceSuite
+                                    partnerName={params.idealPartnerProfile.split(',')[0] || 'Potential Partner'}
+                                    partnerType="organization"
+                                />
                             </StepCard>
                         );
                         case 6: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Design symbiotic ecosystem architecture for strategic partnerships.</p>
-                                <div className="space-y-6">
-                                    {nsilAnalysis && (
-                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">SEAM Architecture Analysis</h4>
-                                            <p className="text-sm text-nexus-text-secondary mb-4">
-                                                Based on your URP Index of {nsilAnalysis.urpIndex} and risk score of {nsilAnalysis.agerRiskScore},
-                                                we've identified {nsilAnalysis.gsmPartnerMatches} potential strategic partners.
-                                            </p>
-                                            <div className="space-y-3">
-                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
-                                                    <span className="text-sm font-medium">Anchor Partners</span>
-                                                    <span className="text-nexus-accent-cyan">High Priority</span>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
-                                                    <span className="text-sm font-medium">Innovation Partners</span>
-                                                    <span className="text-nexus-accent-brown">Medium Priority</span>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
-                                                    <span className="text-sm font-medium">Capital Partners</span>
-                                                    <span className="text-green-400">Strategic Focus</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">SEAM Architecture visualization will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">Interactive partner ecosystem mapping</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Explore a curated dashboard of potential partners, including government, NGO, and academic entities.</p>
+                                <PartnerIntelligenceDashboard params={params} />
                             </StepCard>
                         );
                         case 7: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Plan technology transfer and innovation integration strategies.</p>
-                                <div className="space-y-6">
-                                    {nsilAnalysis && (
-                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Technology Transfer Assessment</h4>
-                                            <div className="space-y-3">
-                                                {nsilAnalysis.keyOpportunities.filter((opp: string) => opp.toLowerCase().includes('technology') || opp.toLowerCase().includes('innovation')).map((tech: string, index: number) => (
-                                                    <div key={index} className="p-3 bg-nexus-surface-800 rounded">
-                                                        <p className="text-sm text-nexus-text-secondary">{tech}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">Technology transfer roadmap will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">Innovation integration planning</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Access communication templates, cultural preparation guides, and track relationship milestones.</p>
+                                <RelationshipBuilder
+                                    partnerName={params.idealPartnerProfile.split(',')[0] || 'Target Partner'}
+                                    partnerType="government"
+                                />
                             </StepCard>
                         );
                         case 8: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Develop comprehensive implementation roadmap with milestones.</p>
-                                <div className="space-y-6">
-                                    {nsilAnalysis && (
-                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Implementation Timeline</h4>
-                                            <div className="space-y-2">
-                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
-                                                    <div className="w-3 h-3 bg-nexus-accent-cyan rounded-full"></div>
-                                                    <span className="text-sm">Phase 1: Planning & Setup (0-3 months)</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
-                                                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                                                    <span className="text-sm">Phase 2: Initial Implementation (3-9 months)</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
-                                                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                                                    <span className="text-sm">Phase 3: Scaling & Optimization (9-18 months)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">Interactive roadmap builder will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">Milestone planning and dependency mapping</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Forecast growth trajectories and model the impact of strategic interventions over a defined time horizon.</p>
+                                <PredictiveGrowthModel
+                                    location={GLOBAL_CITY_DATABASE[targetCountry] || Object.values(GLOBAL_CITY_DATABASE)[0]}
+                                    timeHorizon={5}
+                                    onModelComplete={() => {}}
+                                />
                             </StepCard>
                         );
                         case 9: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Optimize resource allocation and budget planning.</p>
-                                <div className="space-y-6">
-                                    {nsilAnalysis && (
-                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Resource Allocation Analysis</h4>
-                                            <div className="grid md:grid-cols-2 gap-4">
-                                                <div className="text-center p-3 bg-nexus-surface-800 rounded">
-                                                    <div className="text-lg font-bold text-nexus-accent-brown">${nsilAnalysis.calculatedPrice.toLocaleString()}</div>
-                                                    <div className="text-xs text-nexus-text-secondary">Recommended Budget</div>
-                                                </div>
-                                                <div className="text-center p-3 bg-nexus-surface-800 rounded">
-                                                    <div className="text-lg font-bold text-green-400">{nsilAnalysis.confidenceScore}%</div>
-                                                    <div className="text-xs text-nexus-text-secondary">Confidence Level</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">Resource optimization tools will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">Budget planning and ROI analysis</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Analyze how different local stakeholders will perceive your project to anticipate challenges and build alignment.</p>
+                                <StakeholderPerspectiveModule
+                                    selectedPerspectives={['Government', 'Community', 'Investor']}
+                                    onPerspectiveChange={() => {}}
+                                    primaryObjective={params.problemStatement}
+                                />
                             </StepCard>
                         );
                         case 10: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Define success metrics and monitoring frameworks.</p>
-                                <div className="space-y-6">
-                                    <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                        <h4 className="font-semibold text-nexus-accent-cyan mb-2">Performance Metrics Framework</h4>
-                                        <div className="space-y-3">
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Financial Metrics</h5>
-                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
-                                                    <li>• ROI and IRR calculations</li>
-                                                    <li>• Cost-benefit analysis</li>
-                                                    <li>• Budget vs. actual tracking</li>
-                                                </ul>
-                                            </div>
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Operational Metrics</h5>
-                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
-                                                    <li>• Timeline adherence</li>
-                                                    <li>• Milestone completion rates</li>
-                                                    <li>• Stakeholder satisfaction</li>
-                                                </ul>
-                                            </div>
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Impact Metrics</h5>
-                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
-                                                    <li>• Economic development indicators</li>
-                                                    <li>• Job creation metrics</li>
-                                                    <li>• Regional growth contributions</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">Interactive metrics dashboard will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">KPI definition and monitoring setup</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Assess the "human factor" of a region, including safety, political stability, and quality of life for expatriates and teams.</p>
+                                <RegionalComfortIndex
+                                    region={targetRegion}
+                                    country={targetCountry}
+                                />
                             </StepCard>
                         );
                         case 11: return (
                             <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Develop long-term sustainability and monitoring plans.</p>
-                                <div className="space-y-6">
-                                    <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
-                                        <h4 className="font-semibold text-nexus-accent-cyan mb-2">Sustainability Framework</h4>
-                                        <div className="space-y-3">
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Environmental Sustainability</h5>
-                                                <p className="text-xs text-nexus-text-secondary mt-1">Carbon footprint reduction, resource conservation, environmental impact monitoring</p>
-                                            </div>
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Economic Sustainability</h5>
-                                                <p className="text-xs text-nexus-text-secondary mt-1">Long-term financial viability, economic diversification, wealth creation</p>
-                                            </div>
-                                            <div className="p-3 bg-nexus-surface-800 rounded">
-                                                <h5 className="font-medium text-nexus-text-primary">Social Sustainability</h5>
-                                                <p className="text-xs text-nexus-text-secondary mt-1">Community development, stakeholder engagement, social impact measurement</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="text-center py-4">
-                                        <p className="text-nexus-text-secondary">Sustainability planning tools will be implemented here</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">Long-term viability assessment</p>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Find and compare alternative global locations that may offer a better strategic fit for your requirements.</p>
+                                <AlternativeLocationMatcher
+                                    originalLocation={GLOBAL_CITY_DATABASE[targetCountry] || Object.values(GLOBAL_CITY_DATABASE)[0]}
+                                    requirements={{
+                                        minPopulation: 1000000,
+                                        minInfrastructure: 7,
+                                    }}
+                                    onMatchesFound={() => {}}
+                                />
                             </StepCard>
                         );
                         case 12: return (

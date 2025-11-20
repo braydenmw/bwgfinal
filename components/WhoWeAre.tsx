@@ -43,6 +43,27 @@ const WhoWeAre: React.FC<WhoWeAreProps> = ({ onViewChange }) => {
                     </div>
                 </section>
 
+                {/* Section: The Solution - Strapping a Rocket Engine to a Horse Cart */}
+                <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+                    <div className="space-y-6 text-center max-w-4xl mx-auto">
+                        <div>
+                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Strapping a Rocket Engine to a Horse Cart</h2>
+                            <p className="mt-4 text-lg text-gray-600">The world's largest consulting firms are now spending millions on Artificial Intelligence. However, they are using it to make a decades-old process <strong>faster</strong>, not <strong>smarter</strong>. They are strapping a rocket engine to a horse cart.</p>
+                        </div>
+                        <div className="text-gray-600 space-y-4 text-base">
+                            <p>Their model was built for a different era—one where "boots on the ground" intelligence was prohibitively expensive, and decisions were made by analyzing the same few major markets for the same few multinational clients. This created a self-reinforcing cycle where capital flowed only to familiar places, creating the bottlenecks and over-concentration we see today. The "line in the sand" was drawn by human habit and an aversion to the perceived risk of the unknown.</p>
+                            <p>These firms cannot profitably address the crucial "early learning gap" for emerging regions because their high-cost, manual-first structure isn't designed for it. They are brought in <strong>after</strong> initial confidence has already been built.</p>
+                            <p><strong>This is the gap BW Nexus AI was built to fill.</strong></p>
+                            <p>We realized that the tools to bridge this gap are no longer expensive. Our system automates the five crucial early steps of strategic analysis—from defining your persona to assessing initial risk—to provide the one thing everyone needs but no one provides affordably: <strong>the initial confidence to take the next step.</strong> We are not just making the old process faster; we are building an entirely new engine for a new economic frontier.</p>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+
                 {/* Section: The Founder */}
                 <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
                     <div className="space-y-12">
