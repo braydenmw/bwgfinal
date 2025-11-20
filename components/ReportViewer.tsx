@@ -266,6 +266,7 @@ const ReportViewer: React.FC<ReportViewerProps> = ({
     // New: Regex to split content by major NSIL section tags, keeping the tags
     const sectionSplitRegex = /(<nsil:(?:executive_summary|risk_map|match_making_analysis|source_attribution|chart)>[\s\S]*?<\/nsil:.*?>)/g;
     const parts = content.split(sectionSplitRegex).filter(part => part.trim() !== '');
+    
 
     return parts.map((part, index) => {
         const tagMatch = part.match(/<nsil:(\w+)/);
@@ -277,6 +278,29 @@ const ReportViewer: React.FC<ReportViewerProps> = ({
         if (sectionType === 'chart') {
             const json = innerContent.replace(/<\/?nsil:chart>/g, '');
             return { type: 'chart', title: 'Chart', content: json, key: `part-${index}` };
+        }
+
+        if (sectionType === 'future_cast') {
+            const scenarios = Array.from(innerContent.matchAll(/<nsil:scenario name="(.*?)">([\s\S]*?)<\/nsil:scenario>/g)).map(scenarioMatch => {
+                const name = scenarioMatch[1];
+                const driversMatch = scenarioMatch[2].match(/<nsil:drivers>([\s\S]*?)<\/nsil:drivers>/);
+                const impactMatch = scenarioMatch[2].match(/<nsil:regional_impact effect="(.*?)">([\s\S]*?)<\/nsil:regional_impact>/);
+                const recommendationMatch = scenarioMatch[2].match(/<nsil:recommendation>([\s\S]*?)<\/nsil:recommendation>/);
+                return {
+                    name,
+                    drivers: driversMatch ? driversMatch[1].trim() : '',
+                    impact: impactMatch ? impactMatch[2].trim() : '',
+                    impactEffect: impactMatch ? impactMatch[1] : 'neutral',
+                    recommendation: recommendationMatch ? recommendationMatch[1].trim() : '',
+                };
+            });
+            return {
+                type: 'future_cast',
+                title: 'Future-Cast Scenarios',
+                content: scenarios,
+                key: `part-${index}`,
+                sectionType: 'future_cast'
+            };
         }
 
         // Strip the main section tag for processing inner content
@@ -416,7 +440,44 @@ const ReportViewer: React.FC<ReportViewerProps> = ({
                                     {part.type === 'chart' ? (
                                         <NsilChart jsonString={part.content} />
                                     ) : (
-                                        <div dangerouslySetInnerHTML={{ __html: part.content }} className="prose prose-sm prose-invert max-w-none" />
+                                        part.type === 'future_cast' ? (
+                                            <div className="space-y-4">
+                                                {(part.content as any[]).map((scenario, sIndex) => (
+                                                    <div key={sIndex} className="bg-nexus-surface-700 p-4 rounded-lg border border-nexus-border-medium">
+                                                        <h5 className="font-bold text-nexus-text-primary text-md mb-2">{scenario.name}</h5>
+                                                        <p className="text-sm text-nexus-text-secondary mb-2">
+                                                            <strong>Drivers:</strong> {scenario.drivers}
+                                                        </p>
+                                                        <p className="text-sm text-nexus-text-secondary mb-2">
+                                                            <strong>Regional Impact:</strong>{' '}
+                                                            <span className={
+                                                                scenario.impactEffect === 'positive' ? 'text-green-400' :
+                                                                scenario.impactEffect === 'negative' ? 'text-red-400' :
+                                                                'text-yellow-400'
+                                                            }>
+                                                                ({scenario.impactEffect.charAt(0).toUpperCase() + scenario.impactEffect.slice(1)})
+                                                            </span>{' '}
+                                                            {scenario.impact}
+                                                        </p>
+                                                        <p className="text-sm text-nexus-text-secondary">
+                                                            <strong>Recommendation:</strong> {scenario.recommendation}
+                                                        </p>
+                                                        <button
+                                                            onClick={() => onStartSymbiosis({
+                                                                topic: `Future-Cast Scenario: ${scenario.name}`,
+                                                                originalContent: `Drivers: ${scenario.drivers}\nImpact: ${scenario.impact}\nRecommendation: ${scenario.recommendation}`,
+                                                                reportParameters: parameters
+                                                            })}
+                                                            className="mt-3 px-3 py-1 text-xs bg-nexus-accent-brown text-white rounded-md hover:bg-nexus-accent-brown-dark transition-colors"
+                                                        >
+                                                            Discuss Scenario with AI
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div dangerouslySetInnerHTML={{ __html: part.content }} className="prose prose-sm prose-invert max-w-none" />
+                                        )
                                     )}
                                 </ReportCard>
                             );

@@ -104,11 +104,11 @@ export async function generateAnalysisStream(item: LiveOpportunityItem, region: 
 }
 
 // --- Outreach Letter ---
-export async function generateLetterStream(params: ReportParameters): Promise<ReadableStream<Uint8Array>> {
+export async function generateLetterStream(params: ReportParameters, reportContent: string): Promise<ReadableStream<Uint8Array>> {
     const response = await fetch('/api/letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
+        body: JSON.stringify({ params, reportContent }), // Pass both params and content
     });
 
     if (!response.ok || !response.body) {

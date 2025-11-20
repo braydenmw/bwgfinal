@@ -8,7 +8,10 @@ import Spinner from './Spinner.tsx';
 interface LetterGeneratorModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onGenerate: () => Promise<string>;
+  // Modified: Pass reportContent and reportParameters to onGenerate
+  onGenerate: (reportContent: string, reportParameters: any) => Promise<string>;
+  reportContent: string; // New prop
+  reportParameters: any; // New prop
 }
 
 export const LetterGeneratorModal: React.FC<LetterGeneratorModalProps> = ({ isOpen, onClose, onGenerate }) => {
@@ -17,14 +20,14 @@ export const LetterGeneratorModal: React.FC<LetterGeneratorModalProps> = ({ isOp
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState('');
-
+ 
   const handleGenerate = useCallback(async () => {
       setIsGenerating(true);
       setError(null);
       setLetterContent('');
       setCopySuccess('');
-      try {
-        const content = await onGenerate();
+      try { 
+        const content = await onGenerate(reportContent, reportParameters);
         setLetterContent(content);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
@@ -33,7 +36,7 @@ export const LetterGeneratorModal: React.FC<LetterGeneratorModalProps> = ({ isOp
       } finally {
         setIsGenerating(false);
       }
-  }, [onGenerate]);
+  }, [onGenerate, reportContent, reportParameters]);
   
   useEffect(() => {
     if (isOpen) {

@@ -107,9 +107,9 @@ export const INDUSTRIES: { id: string, title: string, icon: React.FC<any> }[] = 
 export const TIERS_BY_ORG_TYPE: Record<string, { id: string, title: string, desc: string, features: string[] }[]> = {
   "Default": [
     { id: 'DirectMatchmaking', title: 'Direct Matchmaking', desc: 'Finds and profiles one ideal foreign partner based on your detailed criteria.', features: ['1 Ideal Partner Match', 'Core Synergy Analysis', 'Contact Strategy Outline'] },
-    { id: 'CompetitiveLandscape', title: 'Competitive Landscape', desc: 'Profiles up to three potential partners and analyzes their competitive positioning.', features: ['Up to 3 Partner Matches', 'Comparative SWOT', 'Market Positioning'] },
-    { id: 'PartnershipFacilitator', title: 'Partnership Facilitator', desc: 'In-depth analysis of three partners with contact strategy and simulated impact.', features: ['3 In-Depth Profiles', 'Stakeholder Mapping', 'Economic Impact Simulation'] },
-    { id: 'StrategicAllianceBlueprint', title: 'Strategic Alliance Blueprint', desc: 'Outlines a joint venture or strategic alliance structure with a top partner.', features: ['In-Depth Partner Analysis', 'JV/Alliance Governance Model', 'Synergy & Risk Mapping'] },
+    { id: 'PartnershipBlueprint', title: 'Partnership Blueprint', desc: 'A vetted shortlist of up to 3 companies with deeper synergy and a preliminary risk map.', features: ['Up to 3 Partner Matches', 'Comparative SWOT', 'Preliminary Risk Map'] },
+    { id: 'TransformationSimulator', title: 'Transformation Simulator', desc: 'Deep dive on the #1 matched partner, including economic impact modeling and Nexus Future-Cast Scenarios™.', features: ['1 In-Depth Profile', 'Economic Impact Modeling', 'Future-Cast Scenarios™'] },
+    { id: 'G2GStrategicAlignmentBlueprint', title: 'G2G Strategic Alignment Blueprint™', desc: 'Country-to-country analysis for strategic alignment on key industries, featuring geopolitical and supply chain stress-testing.', features: ['Country-to-Country Analysis', 'LQ, Cluster, Shift-Share', 'Geopolitical & Supply Chain Stress-Testing'] },
   ],
   "Government": [
     { id: 'Policy Brief', title: 'Policy Brief', desc: 'Analyzes an issue and provides policy recommendations.', features: ['Situational Analysis', 'Comparative Policy Review', 'Actionable Recommendations'] },

@@ -547,7 +547,7 @@ export const Inquire = ({
     };
 
     return (
-        <div className="p-4 h-full flex flex-col max-w-full mx-auto">
+        <div className="p-4 h-full flex flex-col max-w-full mx-auto overflow-hidden">
             <header className="flex-shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="bg-nexus-accent-cyan/10 p-2 rounded-lg">
@@ -561,7 +561,7 @@ export const Inquire = ({
             </header>
 
             {/* Nexus AI Support Interface - Moved to top */}
-            <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-lg">
+            <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-lg flex-shrink-0">
                 <div className="space-y-3">
                     <label className="text-xs font-semibold text-nexus-text-secondary">Nexus AI Support</label>
                     <textarea
@@ -608,7 +608,7 @@ export const Inquire = ({
                 </div>
             </div>
 
-            <div className="mt-4 flex-grow overflow-y-auto pr-2 -mr-2 space-y-4 max-w-full min-h-0">
+            <div className="mt-4 flex-1 overflow-y-auto pr-2 -mr-2 space-y-4 max-w-full">
                  {wizardStep === 4 && (
                      <div className="p-3 bg-white/5 rounded-lg border border-white/10 space-y-3 animate-fadeIn">
                           <h3 className="font-semibold text-nexus-text-primary text-md flex items-center gap-2">
@@ -748,38 +748,6 @@ export const Inquire = ({
                         </div>
                         <button className="mt-3 w-full px-3 py-2 bg-nexus-accent-cyan text-white text-sm font-semibold rounded-md hover:bg-nexus-accent-cyan-dark transition-colors">
                             Accept Selected Suggestions
-                        </button>
-                    </div>
-                )}
-
-                {/* Navigation Buttons - Added for 12-step workflow */}
-                {wizardStep && (
-                    <div className="mt-6 flex justify-between items-center pt-4 border-t border-nexus-border-medium">
-                        <button
-                            onClick={onPrevStep}
-                            disabled={!canGoPrev}
-                            className="px-6 py-2 bg-nexus-surface-700 text-nexus-text-primary font-semibold rounded-lg hover:bg-nexus-surface-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                        >
-                            <span>⬅️</span>
-                            Back
-                        </button>
-
-                        <div className="text-center">
-                            <div className="text-sm text-nexus-text-secondary">
-                                Step {wizardStep} of 12
-                            </div>
-                            <div className="text-xs text-nexus-text-muted mt-1">
-                                {WIZARD_HELP_TEXT[wizardStep]?.split('.')[0] || 'Intelligence Workflow'}
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={onNextStep}
-                            disabled={!canGoNext}
-                            className="px-6 py-2 bg-nexus-accent-cyan text-nexus-primary-900 font-semibold rounded-lg hover:bg-nexus-accent-cyan/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                        >
-                            Next
-                            <span>➡️</span>
                         </button>
                     </div>
                 )}

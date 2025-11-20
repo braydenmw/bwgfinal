@@ -344,7 +344,7 @@ function App() {
         <Header currentView={currentView} onViewChange={handleViewChange} />
         <main className="pt-20 flex-grow overflow-hidden" style={{height: 'calc(100vh - 80px)'}}>
           {/* The container below ensures consistent padding and max-width for non-workspace views */}
-          <div className={`h-full ${currentView !== 'report' ? 'container mx-auto px-4 md:px-8' : ''}`}>
+          <div className={`h-full ${currentView !== 'report' ? 'container mx-auto px-4 md:px-8' : 'p-4 md:p-8'}`}>
             {renderCurrentView()}
           </div>
         </main>
@@ -375,9 +375,11 @@ function App() {
         {letterModalOpen && (
           <LetterGeneratorModal
             isOpen={letterModalOpen}
-            onClose={() => setLetterModalOpen(null)}
-            onGenerate={async () => {
-              const stream = await generateLetterStream(reportParams);
+            onClose={() => setLetterModalOpen(false)}
+            reportContent={reportContent} // Pass the generated report content
+            reportParameters={reportParams} // Pass the report parameters
+            onGenerate={async (content, params) => {
+              const stream = await generateLetterStream(params, content); // Modified to accept content
               const reader = stream.getReader();
               const decoder = new TextDecoder();
               let result = '';

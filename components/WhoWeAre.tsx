@@ -32,18 +32,21 @@ const WhoWeAre: React.FC<WhoWeAreProps> = ({ onViewChange }) => {
 
                 {/* Section: The Problem & The Founder */}
                 <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+                    <div className="space-y-6 text-center max-w-4xl mx-auto">
+                        <div>
+                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">The 100-Year Confidence Gap</h2>
+                            <p className="mt-4 text-lg text-gray-600">For a century, the primary barrier to regional investment has not been a lack of opportunity, but a lack of confidence. This confidence gap is created by three things: the high cost of acquiring on-the-ground intelligence, the fear of unknown risks (political, social, operational), and the inability for local leaders and global investors to speak the same strategic language.</p>
+                        </div>
+                        <div className="text-gray-600 space-y-4 text-base">
+                            <p>This friction between global capital and regional potential is the result of a century of evolving information costs and risk perception.</p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Section: The Founder */}
+                <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
                     <div className="space-y-12">
-                        <div className="text-center max-w-5xl mx-auto">
-                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">The Search for New Frontiers: A Crisis of Clarity</h2>
-                            <p className="mt-4 text-lg text-gray-600">A great economic realignment is underway. Countless reports from governments, universities, and global firms confirm that leaders are actively looking beyond traditional markets to secure supply chains and find new growth. The irony is that the opportunities they seek are often right in their own backyard—in the regional economies that have been misunderstood or underestimated for decades.</p>
-                        </div>
-                        <div className="max-w-5xl mx-auto">
-                            <p className="text-lg text-gray-600">The challenge is a crisis of clarity. Decision-makers are paralyzed by a fog of second-hand information, outdated perceptions, and prohibitive research costs. Regional leaders, in turn, often lack the confidence or the specific tools to translate their deep local knowledge into the language of global strategy. This creates a communication impasse where immense potential remains locked away.</p>
-                            <div className="mt-6 p-4 bg-gray-100 border-l-4 border-gray-800 rounded-r-lg">
-                                <p className="text-lg text-gray-600 italic">This system was developed to solve this. It takes just a few words—an idea, a goal—and transforms them into a structured, data-driven analysis. It provides the clarity and confidence needed to break the ice, enabling leaders on both sides to finally see the true worth a place and its people hold.</p>
-                            </div>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-12 items-center pt-12 border-t border-gray-200">
+                         <div className="grid md:grid-cols-2 gap-12 items-center">
                             <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1911&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A person working on a laptop with data visualizations, representing the intersection of technology and human insight." className="rounded-xl shadow-lg object-cover w-full h-full max-h-96" />
                             <div className="text-center md:text-left">
                                 <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight mb-4">A Message from the Founder</h3>
@@ -56,37 +59,110 @@ const WhoWeAre: React.FC<WhoWeAreProps> = ({ onViewChange }) => {
                     </div>
                 </section>
 
-                {/* Section: Our Guiding Principles */}
-                <section className="p-8 md:p-12 bg-white rounded-2xl shadow-lg">
-                    <div className="bg-gray-100 border-l-4 border-orange-500 rounded-r-lg p-8 max-w-5xl mx-auto">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">A System Built on a Global Realization</h2>
-                        <p className="text-lg text-gray-700 leading-relaxed">
-                            Regional economies are the unsung engines of global prosperity. They supply the food, resources, and industries that fuel national economies, and their people are the backbone of a global workforce, often traveling far from home to support their families. Yet, as major cities face overcrowding and diminishing returns, the immense geographical and human potential of these regions remains overlooked.
-                        </p>
-                        <p className="mt-4 text-lg text-gray-700 leading-relaxed">
-                            <strong>BW Nexus AI was built on this realization.</strong> It is a pioneering system designed to give a voice to these underestimated places. It specializes in early-stage understanding, transforming initial ideas into clear, actionable insights. By providing the reliable, unbiased intelligence that leaders have been asking for, Nexus AI bridges the gap between local realities and global opportunities, ensuring the value of these vital communities is no longer taken for granted.
-                        </p>
+                {/* Section: The BWGA Nexus Platform */}
+                <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">The Evolution of Intelligence</h2>
+                        <p className="mt-2 max-w-3xl mx-auto text-lg text-gray-600">To solve the Confidence Gap, we must first understand its origins.</p>
+                    </div>
+                    {/* Timeline Section */}
+                    <div className="relative">
+                        {/* The connecting line */}
+                        <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200" aria-hidden="true"></div>
+
+                        <div className="space-y-16">
+                            {/* Timeline Item 1 */}
+                            <div className="relative flex items-start">
+                                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-gray-800 rounded-full"></div>
+                                <div className="w-1/2 pr-8 text-right">
+                                    <h4 className="text-xl font-bold text-gray-800">The Age of Infrastructure</h4>
+                                    <p className="text-sm text-gray-500">Early 20th C.</p>
+                                </div>
+                                <div className="w-1/2 pl-8">
+                                    <p className="text-gray-600">Investment followed physical assets like ports and railways. On-the-ground intelligence was scarce and expensive, so capital clustered in a few known hubs. <strong>The pattern began: capital follows certainty.</strong></p>
+                                </div>
+                            </div>
+
+                            {/* Timeline Item 2 */}
+                            <div className="relative flex items-start">
+                                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-gray-800 rounded-full"></div>
+                                <div className="w-1/2 pr-8 text-right">
+                                    <p className="text-gray-600">Consulting firms emerged to provide standardized analysis of entire countries for multinational corporations. Regional nuances were ignored. <strong>The unit of analysis became the nation-state.</strong></p>
+                                </div>
+                                <div className="w-1/2 pl-8">
+                                    <h4 className="text-xl font-bold text-gray-800">The Age of National Analysis</h4>
+                                    <p className="text-sm text-gray-500">Mid 20th C.</p>
+                                </div>
+                            </div>
+
+                            {/* Timeline Item 3 */}
+                            <div className="relative flex items-start">
+                                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-gray-800 rounded-full"></div>
+                                <div className="w-1/2 pr-8 text-right">
+                                    <h4 className="text-xl font-bold text-gray-800">The Age of Efficiency</h4>
+                                    <p className="text-sm text-gray-500">Late 20th C.</p>
+                                </div>
+                                <div className="w-1/2 pl-8">
+                                    <p className="text-gray-600">Globalization demanded simple metrics like cheap labor. Investment flocked to a few special economic zones, creating intense competition while <strong>overlooking potential just a few hundred kilometers away.</strong></p>
+                                </div>
+                            </div>
+
+                            {/* Timeline Item 4 - The Spark */}
+                            <div className="relative flex items-start">
+                                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full ring-4 ring-orange-200"></div>
+                                <div className="w-1/2 pr-8 text-right">
+                                    <p className="text-gray-600">The problem is no longer a lack of data, but an overabundance of chaotic, untrustworthy information. The cost of making sense of it for an unknown region is enormous. <strong>This is the "Crisis of Clarity."</strong></p>
+                                </div>
+                                <div className="w-1/2 pl-8">
+                                    <h4 className="text-xl font-bold text-orange-600">The Spark: Information Overload</h4>
+                                    <p className="text-sm text-gray-500">Today</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                {/* Section: The BWGA Nexus Platform */}
+                {/* Section: The Solution */}
                 <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
-                    <div className="space-y-16">
-                        {/* What BW Nexus AI Produces */}
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2130&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A team collaborating on a strategic blueprint." className="rounded-xl shadow-lg object-cover w-full h-full" />
-                            <div>
-                                <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">What BW Nexus AI Produces</h2>
-                                <p className="text-gray-600 mb-6">The system generates a comprehensive Partnership Toolkit tailored for early engagement and sustained development:</p>
-                                <ul className="space-y-4 text-gray-700">
-                                    <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>A world-class intelligence report featuring structured, data-driven analysis using proprietary frameworks to reveal economic DNA, ecosystem architectures, and strategic recommendations.</li>
-                                    <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>A professionally drafted outreach letter that reduces perceived risk, builds genuine interest, and initiates confident dialogue, enabling users to start conversations like "We believe we have something that could be of benefit to both of us."</li>
-                                    <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>Evidence-backed cases for partnerships, including insights into readiness for investment, symbiotic ecosystems, and simulations of policy or project impacts, all customized to specific goals such as attracting FDI, entering new markets, or modeling socio-economic effects.</li>
-                                </ul>
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">The Nexus AI Advantage: Your AI Agent on the Ground</h2>
+                            <p className="text-gray-600 mb-6">BW Nexus AI is designed to be the "agent on the ground" that was once a person, and then a team of consultants, but is now an AI. It directly attacks the "crisis of clarity" by:</p>
+                            <div className="space-y-4">
+                                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <h4 className="text-lg font-bold text-gray-900 mb-2">1. Automating Sense-Making</h4>
+                                    <p className="text-gray-600">It does what a team of analysts would do in months, but in minutes, ingesting chaotic data and structuring it using a proprietary framework.</p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <h4 className="text-lg font-bold text-gray-900 mb-2">2. Lowering the Cost of "First Look"</h4>
+                                    <p className="text-gray-600">It makes it economically feasible to analyze ten potential regions instead of just one, encouraging exploration beyond the obvious hubs.</p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <h4 className="text-lg font-bold text-gray-900 mb-2">3. Translating Local to Global</h4>
+                                    <p className="text-gray-600">It acts as a universal translator between the language of a local mayor ("we have hardworking people") and a global CFO ("human capital is cost-competitive").</p>
+                                </div>
+                                 <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <h4 className="text-lg font-bold text-gray-900 mb-2">4. Revealing "Latent" Value</h4>
+                                    <p className="text-gray-600">By applying sophisticated models, it can identify potential that isn't visible in surface-level data, such as seeing AgriTech potential in a region known only for tourism.</p>
+                                </div>
                             </div>
                         </div>
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A diverse team working on a complex project, representing symbiosis." className="rounded-xl shadow-lg object-cover w-full h-full" />
+                    </div>
+                </section>
 
-                        {/* For Whom */}
+                {/* Section: What it Produces & For Whom */}
+                <section className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+                    <div className="space-y-16">
+                        <div>
+                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4 text-center">What BW Nexus AI Produces</h2>
+                            <p className="text-gray-600 mb-6 max-w-3xl mx-auto text-center">The system generates a comprehensive Partnership Toolkit tailored for early engagement and sustained development:</p>
+                            <ul className="space-y-4 text-gray-700 max-w-3xl mx-auto">
+                                <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>A world-class intelligence report featuring structured, data-driven analysis using proprietary frameworks to reveal economic DNA, ecosystem architectures, and strategic recommendations.</li>
+                                <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>A professionally drafted outreach letter that reduces perceived risk, builds genuine interest, and initiates confident dialogue, enabling users to start conversations like "We believe we have something that could be of benefit to both of us."</li>
+                                <li className="flex items-start gap-3"><div className="w-2 h-2 mt-2 bg-orange-500 rounded-full flex-shrink-0"></div>Evidence-backed cases for partnerships, including insights into readiness for investment, symbiotic ecosystems, and simulations of policy or project impacts, all customized to specific goals such as attracting FDI, entering new markets, or modeling socio-economic effects.</li>
+                            </ul>
+                        </div>
                         <div>
                             <div className="text-center mb-10">
                                 <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">For Whom</h2>
@@ -109,31 +185,6 @@ const WhoWeAre: React.FC<WhoWeAreProps> = ({ onViewChange }) => {
                                     <h4 className="text-xl font-bold text-gray-800 mb-4">NGOs & Academia</h4>
                                     <p className="text-gray-600 mb-4">To conduct impact studies, synthesize data for research, and model development programs that give voice to communities taken for granted.</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        {/* Why It's Different */}
-                        <div className="pt-12 border-t border-gray-200">
-                            <div className="text-center mb-12">
-                                <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">Why It's Different from Other Systems</h2>
-                                <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">As the world's first Strategic Symbiosis System, BW Nexus AI fundamentally redefines regional development by focusing on early-stage clarity and the reclamation of undervalued potential. Unlike generic AI tools, standard reports, or basic matchmaking platforms that rely on outdated data, high costs, or superficial insights, it tackles the "crisis of clarity" head-on, translating raw ideas into a global language that builds confidence and attracts investment. It gives voice to change by empowering those in overlooked places—small Asian cities, regional hubs, or emerging economies—to articulate their worth, turning what most take for granted into recognized assets.</p>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-12 items-center">
-                                <div>
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200 mb-6">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-3">Proprietary Technologies</h3>
-                                        <p className="text-gray-600">Innovations like Nexus Symbiotic Intelligence Language™ (for clear, queryable dialogue), Regional Readiness & Opportunity Index (RROI) (uncovering true economic DNA), Strategic Ecosystem Architecture Model (SEAM) (building resilient partner networks), and AI-Human Confidence Bridge (crafting risk-reducing communications).</p>
-                                    </div>
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200 mb-6">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-3">Early Stages of Interest</h3>
-                                        <p className="text-gray-600">Where others are paralyzed by fog, Nexus AI requires just a few words to create structured, evidence-backed cases, breaking the ice for serious engagement without extensive upfront research.</p>
-                                    </div>
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-3">Classifications on Overlooked Places</h3>
-                                        <p className="text-gray-600">It moves beyond biases to reveal opportunities in regions dismissed as underdeveloped, fostering symbiotic partnerships where others see only risks, and providing the clarification people have demanded to drive meaningful, inclusive global development.</p>
-                                    </div>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A diverse team working on a complex project, representing symbiosis." className="rounded-xl shadow-lg object-cover w-full h-full" />
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ import { CustomPersonaIcon, CustomIndustryIcon, ArrowUpIcon, NexusLogo } from '.
 import QualityAnalysis from './QualityAnalysis.tsx';
 import { ProfileStep } from './ProfileStep.tsx';
 import { TradeDisruptionDisplay, TradeDisruptionAnalyzer } from './TradeDisruptionModel.tsx';
+import { ManualEntrySelect } from './ManualEntrySelect.tsx';
 import { MarketDiversificationDashboard } from './MarketDiversificationModule.tsx';
 import GlobalComparativeEngine from './GlobalComparativeEngine.tsx';
 import StakeholderPerspectiveModule from './StakeholderPerspectiveModule.tsx';
@@ -87,6 +88,8 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
     const [targetRegion, setTargetRegion] = useState('');
     const [targetCountry, setTargetCountry] = useState('');
     const [targetCity, setTargetCity] = useState('');
+    const [isManualIndustry, setIsManualIndustry] = useState(false);
+    const [manualIndustryValue, setManualIndustryValue] = useState('');
 
     // NSIL Analysis state
     const [nsilAnalysis, setNsIlAnalysis] = useState<any>(null);
@@ -184,6 +187,16 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
         onParamsChange({ ...params, [field]: newValues });
     };
     
+    const handleIndustryChange = (industryId: string) => {
+        handleMultiSelectToggle('industry', industryId);
+        if (industryId === 'Custom') {
+            setIsManualIndustry(true);
+        } else {
+            setIsManualIndustry(false);
+            setManualIndustryValue('');
+        }
+    };
+
     const getValidationErrors = useCallback((page: number): string[] => {
         const errors: string[] = [];
         switch(page) {
@@ -322,20 +335,19 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
                                 </div>
                                 <div>
                                     <label className={`${labelStyles} text-base`}>Core Industry Focus *</label>
-                                    <div className="bg-nexus-surface-900 p-4 rounded-xl border border-nexus-border-medium mt-2">
-                                        <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
-                                            {INDUSTRIES.map((industry) => (
-                                                <button key={industry.id} onClick={() => handleMultiSelectToggle('industry', industry.id)} className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-nexus-surface-800 hover:bg-nexus-surface-700 shadow-sm hover:shadow-md ${params.industry.includes(industry.id) ? 'border-nexus-accent-cyan scale-105 shadow-lg ring-2 ring-nexus-accent-cyan/20' : 'border-nexus-border-medium hover:border-nexus-border-strong'}`}>
-                                                    <industry.icon className={`w-8 h-8 mb-2 transition-colors duration-200 ${params.industry.includes(industry.id) ? 'text-nexus-accent-cyan' : 'text-nexus-text-secondary group-hover:text-nexus-text-primary'}`} />
-                                                    <span className="font-semibold text-nexus-text-primary text-xs leading-tight">{industry.title}</span>
-                                                </button>
-                                            ))}
-                                            <button onClick={() => handleMultiSelectToggle('industry', 'Custom')} className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-nexus-surface-800 hover:bg-nexus-surface-700 shadow-sm hover:shadow-md ${params.industry.includes('Custom') ? 'border-nexus-accent-cyan scale-105 shadow-lg ring-2 ring-nexus-accent-cyan/20' : 'border-nexus-border-medium hover:border-nexus-border-strong'}`} title="Define a custom industry">
-                                                <CustomIndustryIcon className={`w-8 h-8 mb-2 transition-colors duration-200 ${params.industry.includes('Custom') ? 'text-nexus-accent-cyan' : 'text-nexus-text-secondary group-hover:text-nexus-text-primary'}`} />
-                                                <span className="font-semibold text-nexus-text-primary text-xs leading-tight">Custom</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <ManualEntrySelect
+                                        label="Core Industry Focus *"
+                                        options={INDUSTRIES}
+                                        value={params.industry.length > 0 && !isManualIndustry ? INDUSTRIES.find(i => i.id === params.industry[0]) : undefined}
+                                        onSelect={(option) => handleChange('industry', [option.id])}
+                                        onManualChange={(value) => handleChange('customIndustry', value)}
+                                        isManual={isManualIndustry}
+                                        setIsManual={setIsManualIndustry}
+                                        manualValue={params.customIndustry || ''}
+                                        displayKey="title"
+                                        valueKey="id"
+                                        placeholder="Select or enter industry..."
+                                    />
                                 </div>
                                 {params.industry.includes('Custom') && (
                                     <div className="mt-2">
@@ -343,6 +355,23 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
                                         <textarea value={params.customIndustry} onChange={e => handleChange('customIndustry', e.target.value)} rows={2} className={inputStyles} placeholder="Describe the custom industry or niche sector..." />
                                     </div>
                                 )}
+                                {/* Original industry selection buttons - can be removed or kept for multi-select if ManualEntrySelect is adapted */}
+                                {/* For now, keeping the ManualEntrySelect as a single-select for simplicity */}
+                                {/* If multi-select is desired, the ManualEntrySelect would need to be more complex or this section would remain */}
+                                {/* <div className="bg-nexus-surface-900 p-4 rounded-xl border border-nexus-border-medium mt-2">
+                                    <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
+                                        {INDUSTRIES.map((industry) => (
+                                            <button key={industry.id} onClick={() => handleIndustryChange(industry.id)} className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-nexus-surface-800 hover:bg-nexus-surface-700 shadow-sm hover:shadow-md ${params.industry.includes(industry.id) ? 'border-nexus-accent-cyan scale-105 shadow-lg ring-2 ring-nexus-accent-cyan/20' : 'border-nexus-border-medium hover:border-nexus-border-strong'}`}>
+                                                <industry.icon className={`w-8 h-8 mb-2 transition-colors duration-200 ${params.industry.includes(industry.id) ? 'text-nexus-accent-cyan' : 'text-nexus-text-secondary group-hover:text-nexus-text-primary'}`} />
+                                                <span className="font-semibold text-nexus-text-primary text-xs leading-tight">{industry.title}</span>
+                                            </button>
+                                        ))}
+                                        <button onClick={() => handleIndustryChange('Custom')} className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-nexus-surface-800 hover:bg-nexus-surface-700 shadow-sm hover:shadow-md ${params.industry.includes('Custom') ? 'border-nexus-accent-cyan scale-105 shadow-lg ring-2 ring-nexus-accent-cyan/20' : 'border-nexus-border-medium hover:border-nexus-border-strong'}`} title="Define a custom industry">
+                                            <CustomIndustryIcon className={`w-8 h-8 mb-2 transition-colors duration-200 ${params.industry.includes('Custom') ? 'text-nexus-accent-cyan' : 'text-nexus-text-secondary group-hover:text-nexus-text-primary'}`} />
+                                            <span className="font-semibold text-nexus-text-primary text-xs leading-tight">Custom</span>
+                                        </button>
+                                    </div>
+                                </div> */}
                             </StepCard>
                         );
                         case 3: return (
@@ -692,8 +721,8 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
     }, []);
 
     return (
-        <div className="flex h-screen bg-nexus-primary-900 font-sans text-nexus-text-primary">
-            <div className="w-96 flex-shrink-0 bg-nexus-surface-900 border-r border-nexus-border-medium shadow-lg">
+        <div className="flex h-full bg-nexus-primary-900 font-sans text-nexus-text-primary border border-nexus-border-medium rounded-2xl shadow-2xl overflow-hidden">
+            <div className="w-96 flex-shrink-0 bg-nexus-surface-900 border-r border-nexus-border-medium">
                 <Inquire // The left-hand AI co-pilot panel
                     {...restInquireProps}
                     params={params}
