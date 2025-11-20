@@ -39,12 +39,6 @@ export interface ReportParameters {
   analyticalModules: string[];
   reportLength: ReportLength;
   outputFormat: OutputFormat;
-  // NSIL Engine fields
-  refinedProblemStatement?: string;
-  country?: string;
-  persona?: string;
-  organization?: string;
-  uploadedDocument?: boolean;
   // 12-step workflow fields
   strategicContext?: string;
   opportunityScore?: OpportunityScore;
@@ -81,21 +75,6 @@ export interface SymbiosisContext {
 }
 
 export type UserTier = 'basic' | 'professional' | 'enterprise';
-
-export interface Tier {
-  id: string;
-  title: string;
-  desc: string;
-  features: string[];
-}
-
-export interface AiSuggestion {
-  type: 'parameter' | 'content' | 'structure';
-  field: string;
-  value: any;
-  confidence: number;
-  reasoning: string;
-}
 
 export interface UserProfile {
   userName: string;
@@ -287,168 +266,6 @@ export interface NexusBrainState {
   generativeModel: GenerativeModel | null;
 }
 
-// --- GLOBAL INTELLIGENCE TYPES ---
-
-export interface GlobalCityData {
-  city: string;
-  country: string;
-  region: string;
-  population: number;
-  gdp: number;
-  growthRate: number;
-  infrastructure: {
-    transportation: number;
-    digital: number;
-    utilities: number;
-  };
-  businessEnvironment: {
-    easeOfDoingBusiness: number;
-    corruptionIndex: number;
-    regulatoryQuality: number;
-  };
-  talentPool: {
-    educationLevel: number;
-    skillsAvailability: number;
-    laborCosts: number;
-  };
-  marketAccess: {
-    domesticMarket: number;
-    exportPotential: number;
-    tradeRoutes: string[];
-  };
-}
-
-export interface SuccessFactor {
-  factor: string;
-  weight: number;
-  description: string;
-  dataSources: string[];
-  measurement: string;
-}
-
-export interface ComparativeAnalysis {
-  primaryLocation: GlobalCityData;
-  alternativeLocations: GlobalCityData[];
-  successFactors: SuccessFactor[];
-  comparativeScores: {
-    location: string;
-    totalScore: number;
-    factorScores: Record<string, number>;
-    strengths: string[];
-    weaknesses: string[];
-  }[];
-  recommendations: {
-    bestFit: string;
-    rationale: string;
-    riskLevel: 'Low' | 'Medium' | 'High';
-    investmentPotential: number;
-  };
-}
-
-export interface StakeholderPerspective {
-  persona: 'Government' | 'Corporate' | 'Investor' | 'Academic' | 'Community';
-  priorities: string[];
-  concerns: string[];
-  successMetrics: string[];
-  riskFactors: string[];
-  valueProposition: string;
-}
-
-export interface PredictiveGrowthModel {
-  location: GlobalCityData;
-  timeHorizon: number; // years
-  growthScenarios: {
-    scenario: string;
-    probability: number;
-    projectedGrowth: number[];
-    keyDrivers: string[];
-    interventions: string[];
-  }[];
-  riskEvolution: {
-    year: number;
-    riskLevel: number;
-    primaryRisks: string[];
-  }[];
-  opportunityWindows: {
-    startYear: number;
-    duration: number;
-    opportunityType: string;
-    potentialImpact: number;
-  }[];
-}
-
-export interface AlternativeLocationMatch {
-  originalLocation: GlobalCityData;
-  matchedLocations: {
-    location: GlobalCityData;
-    matchScore: number;
-    matchReasons: string[];
-    improvementAreas: string[];
-    transitionChallenges: string[];
-  }[];
-  relocationStrategy: {
-    timeline: string;
-    resourceRequirements: string[];
-    riskMitigation: string[];
-    successProbability: number;
-  };
-}
-
-export interface GlobalIntelligenceReport {
-  executiveSummary: string;
-  comparativeAnalysis: ComparativeAnalysis;
-  stakeholderPerspectives: StakeholderPerspective[];
-  predictiveModels: PredictiveGrowthModel;
-  alternativeMatches: AlternativeLocationMatch;
-  recommendations: {
-    primaryRecommendation: string;
-    alternativeOptions: string[];
-    implementationRoadmap: string[];
-    monitoringMetrics: string[];
-  };
-  riskAssessment: {
-    overallRisk: 'Low' | 'Medium' | 'High';
-    riskFactors: string[];
-    mitigationStrategies: string[];
-    contingencyPlans: string[];
-  };
-}
-
-// Enhanced Letter Types for Global Intelligence
-export type GlobalLetterType =
-  | 'investment_proposal'
-  | 'partnership_introduction'
-  | 'joint_venture_proposal'
-  | 'funding_request'
-  | 'policy_advocacy'
-  | 'government_partnership'
-  | 'regulatory_compliance'
-  | 'public_private_partnership'
-  | 'market_entry_strategy'
-  | 'supplier_relationship'
-  | 'distribution_channel'
-  | 'technology_transfer'
-  | 'community_engagement'
-  | 'university_collaboration'
-  | 'industry_association'
-  | 'international_organization';
-
-export interface GlobalLetterTemplate {
-  type: GlobalLetterType;
-  title: string;
-  description: string;
-  applicablePersonas: ('Government' | 'Corporate' | 'Investor' | 'Academic' | 'Community')[];
-  sectors: string[];
-  content: {
-    introduction: string;
-    body: string[];
-    conclusion: string;
-    callToAction: string;
-  };
-  customizationFields: string[];
-  successMetrics: string[];
-}
-
 // --- 12-STEP INTELLIGENCE SYSTEM TYPES ---
 
 export interface OpportunityScore {
@@ -493,15 +310,4 @@ export interface WorkflowProgress {
   currentStep: number; // 1-12
   completedSteps: IntelligenceStep[];
   stepData: Record<IntelligenceStep, any>;
-}
-
-export interface ReportData {
-  type: string;
-  title: string;
-  sections: {
-    title: string;
-    content: string;
-  }[];
-  analysisPoints: string[];
-  recommendations: string[];
 }

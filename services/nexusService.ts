@@ -259,6 +259,22 @@ export async function checkReportStatus(jobId: string): Promise<{ status: 'pendi
     return await response.json();
 }
 
+// --- Compose Report with Modules ---
+export async function composeReport(selectedModules: string[], params: ReportParameters): Promise<any> {
+    const response = await fetch('/api/compose-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ modules: selectedModules, params }),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Report composition failed: ${response.status} ${errorText}`);
+    }
+
+    return await response.json();
+}
+
 // --- Economic Data ---
 export async function fetchEconomicDataForCountry(country: string): Promise<EconomicData> {
     try {

@@ -10,6 +10,13 @@ import QualityAnalysis from './QualityAnalysis.tsx';
 import { ProfileStep } from './ProfileStep.tsx';
 import { TradeDisruptionDisplay, TradeDisruptionAnalyzer } from './TradeDisruptionModel.tsx';
 import { MarketDiversificationDashboard } from './MarketDiversificationModule.tsx';
+import GlobalComparativeEngine from './GlobalComparativeEngine.tsx';
+import StakeholderPerspectiveModule from './StakeholderPerspectiveModule.tsx';
+import PredictiveGrowthModel from './PredictiveGrowthModel.tsx';
+import AlternativeLocationMatcher from './AlternativeLocationMatcher.tsx';
+import IntelligenceDashboard from './IntelligenceDashboard.tsx';
+import { runEnhancedNSILAnalysis, getSmartTradeOfficerGuidance } from './NSILEngine.ts';
+import { ReviewStep } from './ReviewStep.tsx';
 import Stepper from './Stepper';
 
 interface ReportGeneratorProps {
@@ -80,6 +87,10 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
     const [targetRegion, setTargetRegion] = useState('');
     const [targetCountry, setTargetCountry] = useState('');
     const [targetCity, setTargetCity] = useState('');
+
+    // NSIL Analysis state
+    const [nsilAnalysis, setNsIlAnalysis] = useState<any>(null);
+    const [smartTradeGuidance, setSmartTradeGuidance] = useState<any>(null);
 
     const handleStepClick = (stepNumber: number) => {
         const page = WIZARD_STEPS.find(s => s.id === stepNumber)?.page || 1;
@@ -402,23 +413,271 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
                                 </div>
                             </StepCard>
                         );
-                        // Placeholder for other steps
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                        case 10:
-                        case 11:
-                        case 12:
-                            return (
-                                <StepCard key={step.id} title={step.title} stepNumber={step.id}>
-                                    <div className="text-center py-8">
-                                        <p className="text-nexus-text-secondary">Configuration for "{step.title}" will be available here.</p>
-                                        <p className="text-xs text-nexus-text-muted mt-2">This is a placeholder for step {step.id}.</p>
+                        case 5: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Comprehensive risk assessment using NSIL AI analysis framework.</p>
+                                <div className="space-y-6">
+                                    {!nsilAnalysis ? (
+                                        <div className="text-center py-8">
+                                            <button
+                                                onClick={() => {
+                                                    const analysis = runEnhancedNSILAnalysis(params);
+                                                    setNsIlAnalysis(analysis);
+                                                }}
+                                                className="px-6 py-3 bg-nexus-accent-cyan text-white font-semibold rounded-lg hover:bg-nexus-accent-cyan-dark transition-colors"
+                                            >
+                                                Run NSIL Risk Assessment
+                                            </button>
+                                            <p className="text-xs text-nexus-text-muted mt-4">Click to generate comprehensive risk analysis using AI-powered NSIL framework</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-6">
+                                            <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                                <h4 className="font-semibold text-nexus-accent-cyan mb-2">NSIL Risk Assessment Results</h4>
+                                                <div className="grid md:grid-cols-3 gap-4 mb-4">
+                                                    <div className="text-center">
+                                                        <div className="text-2xl font-bold text-nexus-accent-brown">{nsilAnalysis.urpIndex}</div>
+                                                        <div className="text-xs text-nexus-text-secondary">URP Index</div>
+                                                    </div>
+                                                    <div className="text-center">
+                                                        <div className="text-2xl font-bold text-red-400">{nsilAnalysis.agerRiskScore}</div>
+                                                        <div className="text-xs text-nexus-text-secondary">Risk Score</div>
+                                                    </div>
+                                                    <div className="text-center">
+                                                        <div className="text-2xl font-bold text-green-400">{nsilAnalysis.gsmPartnerMatches}</div>
+                                                        <div className="text-xs text-nexus-text-secondary">Partner Matches</div>
+                                                    </div>
+                                                </div>
+                                                <p className="text-sm text-nexus-text-secondary">{nsilAnalysis.summary}</p>
+                                            </div>
+
+                                            <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                                <h4 className="font-semibold text-nexus-accent-cyan mb-2">Key Risk Factors</h4>
+                                                <ul className="space-y-2">
+                                                    {nsilAnalysis.keyRisks.map((risk: string, index: number) => (
+                                                        <li key={index} className="flex items-start gap-2 text-sm">
+                                                            <span className="text-red-400 mt-1">⚠️</span>
+                                                            <span className="text-nexus-text-secondary">{risk}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </StepCard>
+                        );
+                        case 6: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Design symbiotic ecosystem architecture for strategic partnerships.</p>
+                                <div className="space-y-6">
+                                    {nsilAnalysis && (
+                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">SEAM Architecture Analysis</h4>
+                                            <p className="text-sm text-nexus-text-secondary mb-4">
+                                                Based on your URP Index of {nsilAnalysis.urpIndex} and risk score of {nsilAnalysis.agerRiskScore},
+                                                we've identified {nsilAnalysis.gsmPartnerMatches} potential strategic partners.
+                                            </p>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
+                                                    <span className="text-sm font-medium">Anchor Partners</span>
+                                                    <span className="text-nexus-accent-cyan">High Priority</span>
+                                                </div>
+                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
+                                                    <span className="text-sm font-medium">Innovation Partners</span>
+                                                    <span className="text-nexus-accent-brown">Medium Priority</span>
+                                                </div>
+                                                <div className="flex items-center justify-between p-3 bg-nexus-surface-800 rounded">
+                                                    <span className="text-sm font-medium">Capital Partners</span>
+                                                    <span className="text-green-400">Strategic Focus</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">SEAM Architecture visualization will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">Interactive partner ecosystem mapping</p>
                                     </div>
-                                </StepCard>
-                            );
+                                </div>
+                            </StepCard>
+                        );
+                        case 7: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Plan technology transfer and innovation integration strategies.</p>
+                                <div className="space-y-6">
+                                    {nsilAnalysis && (
+                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Technology Transfer Assessment</h4>
+                                            <div className="space-y-3">
+                                                {nsilAnalysis.keyOpportunities.filter((opp: string) => opp.toLowerCase().includes('technology') || opp.toLowerCase().includes('innovation')).map((tech: string, index: number) => (
+                                                    <div key={index} className="p-3 bg-nexus-surface-800 rounded">
+                                                        <p className="text-sm text-nexus-text-secondary">{tech}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">Technology transfer roadmap will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">Innovation integration planning</p>
+                                    </div>
+                                </div>
+                            </StepCard>
+                        );
+                        case 8: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Develop comprehensive implementation roadmap with milestones.</p>
+                                <div className="space-y-6">
+                                    {nsilAnalysis && (
+                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Implementation Timeline</h4>
+                                            <div className="space-y-2">
+                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
+                                                    <div className="w-3 h-3 bg-nexus-accent-cyan rounded-full"></div>
+                                                    <span className="text-sm">Phase 1: Planning & Setup (0-3 months)</span>
+                                                </div>
+                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
+                                                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                                    <span className="text-sm">Phase 2: Initial Implementation (3-9 months)</span>
+                                                </div>
+                                                <div className="flex items-center gap-3 p-2 bg-nexus-surface-800 rounded">
+                                                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                                                    <span className="text-sm">Phase 3: Scaling & Optimization (9-18 months)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">Interactive roadmap builder will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">Milestone planning and dependency mapping</p>
+                                    </div>
+                                </div>
+                            </StepCard>
+                        );
+                        case 9: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Optimize resource allocation and budget planning.</p>
+                                <div className="space-y-6">
+                                    {nsilAnalysis && (
+                                        <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                            <h4 className="font-semibold text-nexus-accent-cyan mb-2">Resource Allocation Analysis</h4>
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                <div className="text-center p-3 bg-nexus-surface-800 rounded">
+                                                    <div className="text-lg font-bold text-nexus-accent-brown">${nsilAnalysis.calculatedPrice.toLocaleString()}</div>
+                                                    <div className="text-xs text-nexus-text-secondary">Recommended Budget</div>
+                                                </div>
+                                                <div className="text-center p-3 bg-nexus-surface-800 rounded">
+                                                    <div className="text-lg font-bold text-green-400">{nsilAnalysis.confidenceScore}%</div>
+                                                    <div className="text-xs text-nexus-text-secondary">Confidence Level</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">Resource optimization tools will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">Budget planning and ROI analysis</p>
+                                    </div>
+                                </div>
+                            </StepCard>
+                        );
+                        case 10: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Define success metrics and monitoring frameworks.</p>
+                                <div className="space-y-6">
+                                    <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                        <h4 className="font-semibold text-nexus-accent-cyan mb-2">Performance Metrics Framework</h4>
+                                        <div className="space-y-3">
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Financial Metrics</h5>
+                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
+                                                    <li>• ROI and IRR calculations</li>
+                                                    <li>• Cost-benefit analysis</li>
+                                                    <li>• Budget vs. actual tracking</li>
+                                                </ul>
+                                            </div>
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Operational Metrics</h5>
+                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
+                                                    <li>• Timeline adherence</li>
+                                                    <li>• Milestone completion rates</li>
+                                                    <li>• Stakeholder satisfaction</li>
+                                                </ul>
+                                            </div>
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Impact Metrics</h5>
+                                                <ul className="text-xs text-nexus-text-secondary mt-1 space-y-1">
+                                                    <li>• Economic development indicators</li>
+                                                    <li>• Job creation metrics</li>
+                                                    <li>• Regional growth contributions</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">Interactive metrics dashboard will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">KPI definition and monitoring setup</p>
+                                    </div>
+                                </div>
+                            </StepCard>
+                        );
+                        case 11: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Develop long-term sustainability and monitoring plans.</p>
+                                <div className="space-y-6">
+                                    <div className="bg-nexus-surface-900 p-4 rounded-lg border border-nexus-border-medium">
+                                        <h4 className="font-semibold text-nexus-accent-cyan mb-2">Sustainability Framework</h4>
+                                        <div className="space-y-3">
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Environmental Sustainability</h5>
+                                                <p className="text-xs text-nexus-text-secondary mt-1">Carbon footprint reduction, resource conservation, environmental impact monitoring</p>
+                                            </div>
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Economic Sustainability</h5>
+                                                <p className="text-xs text-nexus-text-secondary mt-1">Long-term financial viability, economic diversification, wealth creation</p>
+                                            </div>
+                                            <div className="p-3 bg-nexus-surface-800 rounded">
+                                                <h5 className="font-medium text-nexus-text-primary">Social Sustainability</h5>
+                                                <p className="text-xs text-nexus-text-secondary mt-1">Community development, stakeholder engagement, social impact measurement</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-center py-4">
+                                        <p className="text-nexus-text-secondary">Sustainability planning tools will be implemented here</p>
+                                        <p className="text-xs text-nexus-text-muted mt-2">Long-term viability assessment</p>
+                                    </div>
+                                </div>
+                            </StepCard>
+                        );
+                        case 12: return (
+                            <StepCard key={step.id} title={step.title} stepNumber={step.id}>
+                                <p className="text-sm text-nexus-text-secondary -mt-4 mb-4">Review all configurations and prepare for report generation.</p>
+                                <ReviewStep
+                                    reportData={{
+                                        type: 'Intelligence Blueprint',
+                                        title: params.reportName || 'Untitled Report',
+                                        sections: [
+                                            { title: 'Strategic Context', content: params.problemStatement || 'Not defined' },
+                                            { title: 'Target Region', content: params.region || 'Not specified' },
+                                            { title: 'Analysis Framework', content: params.tier.join(', ') || 'Not selected' },
+                                            { title: 'AI Analysis Team', content: params.aiPersona.join(', ') || 'Not configured' }
+                                        ],
+                                        analysisPoints: [
+                                            'Regional opportunity assessment completed',
+                                            'Risk analysis framework established',
+                                            'Partner ecosystem mapped',
+                                            'Implementation roadmap defined'
+                                        ],
+                                        recommendations: [
+                                            'Proceed with intelligence blueprint generation',
+                                            'Schedule stakeholder engagement sessions',
+                                            'Initiate partner outreach program',
+                                            'Establish monitoring and evaluation framework'
+                                        ]
+                                    }}
+                                    updateReportData={() => {}} // Read-only for review
+                                />
+                            </StepCard>
+                        );
                         default: return null;
                     }
                 })}
@@ -426,558 +685,6 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
         );
     };
 
-    const renderStepContent_OLD = () => {
-        const step = 1; // Keep for switch logic, will be replaced
-        switch (step) {
-            case 1: // Profile & Scope - This case is now split into multiple cards
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <ProfileStep params={params} handleChange={handleChange} inputStyles={inputStyles} labelStyles={labelStyles} />
-                    </div>
-                );
-            case 2: // Strategic Context - This case is now split into multiple cards
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center shadow-md border border-gray-200">
-                            <span className="text-2xl">🎯</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Strategic Context</h3>
-                            <p className="text-gray-600 text-sm">Define your market opportunity and geographic focus.</p>
-                          </div>
-                        </div>
-
-                        {/* AI-Powered Recommendations */}
-                        <div className="mb-6 p-6 bg-nexus-accent-cyan/5 border border-nexus-accent-cyan/20 rounded-xl">
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-nexus-accent-cyan/10 rounded-lg">
-                              <NexusLogo className="w-6 h-6" />
-                            </div>
-                            <div>
-                              <h4 className="text-lg font-semibold text-nexus-accent-cyan">🤖 Nexus AI Recommendations</h4>
-                              <p className="text-sm text-nexus-text-secondary">AI-powered suggestions based on your profile</p>
-                            </div>
-                          </div>
-
-                          <div className="space-y-4">
-                            <div className="bg-white/50 p-4 rounded-lg border border-nexus-accent-cyan/30">
-                              <h5 className="font-semibold text-nexus-text-primary mb-2">Recommended Analysis Tiers for {params.organizationType}</h5>
-                              <div className="text-sm text-nexus-text-secondary mb-3">
-                                Based on your {params.organizationType} profile, Nexus AI suggests these analysis frameworks:
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {currentTiers.slice(0, 3).map((tier) => (
-                                  <span key={tier.id} className="px-3 py-1 bg-nexus-accent-cyan/20 text-nexus-accent-cyan text-xs rounded-full border border-nexus-accent-cyan/30">
-                                    ⭐ {tier.title}
-                                  </span>
-                                ))}
-                              </div>
-                              <p className="text-xs text-nexus-text-muted mt-2 italic">
-                                💡 These are AI recommendations - you can select any combination that fits your needs
-                              </p>
-                            </div>
-
-                            {params.region && (
-                              <div className="bg-white/50 p-4 rounded-lg border border-nexus-accent-cyan/30">
-                                <h5 className="font-semibold text-nexus-text-primary mb-2">Regional Intelligence Focus</h5>
-                                <p className="text-sm text-nexus-text-secondary">
-                                  For <strong>{params.region}</strong>, consider adding regional economic analysis and market entry strategies to your report.
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className={labelStyles}>Target Region *</label>
-                                <select value={targetRegion} onChange={e => { setTargetRegion(e.target.value); setTargetCountry(''); setTargetCity(''); }} className={`${inputStyles} text-base`} aria-label="Target Region">
-                                    <option value="">Select Global Region</option>
-                                    {REGIONS_AND_COUNTRIES.map(region => <option key={region.name} value={region.name}>{region.name}</option>)}
-                                </select>
-                            </div>
-                            <div className="space-y-2">
-                                <label className={labelStyles}>Target Country *</label>
-                                  <select value={targetCountry} onChange={e => setTargetCountry(e.target.value)} disabled={!targetRegion} className={`${inputStyles} disabled:bg-gray-100 disabled:text-gray-500 text-base`} aria-label="Target Country">
-                                    <option value="">Select Country</option>
-                                    {REGIONS_AND_COUNTRIES.find(r => r.name === targetRegion)?.countries.map(country => <option key={country} value={country}>{country}</option>)}
-                                </select>
-                            </div>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-6 mt-6">
-                           <div className="space-y-2">
-                                 <label className={labelStyles}>Target City / Area</label>
-                                 <input type="text" value={targetCity} onChange={e => setTargetCity(e.target.value)} className={`${inputStyles} text-base`} placeholder="e.g., Davao City, Metro Manila" />
-                             </div>
-                             <div className="space-y-2">
-                                 <label className={labelStyles}>Analysis Timeframe</label>
-                                 <select value={params.analysisTimeframe} onChange={e => handleChange('analysisTimeframe', e.target.value)} className={`${inputStyles} text-base`} aria-label="Analysis Timeframe">
-                                     <option>Any Time</option><option>Last 6 Months</option><option>Last 12 Months</option><option>Last 2 Years</option>
-                                 </select>
-                             </div>
-                         </div>
-
-                        <div className="mt-8">
-                            <label className={`${labelStyles} text-base`}>Core Industry Focus *</label>
-                            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mt-3">
-                              <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
-                                  {INDUSTRIES.map((industry) => (
-                                      <button key={industry.id} onClick={() => handleMultiSelectToggle('industry', industry.id)} className={`p-5 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md ${params.industry.includes(industry.id) ? 'border-gray-800 scale-105 shadow-lg ring-2 ring-gray-800/20' : 'border-gray-200 hover:border-gray-400'}`}>
-                                          <industry.icon className={`w-10 h-10 mb-3 transition-colors duration-200 ${params.industry.includes(industry.id) ? 'text-gray-800' : 'text-gray-500 group-hover:text-gray-700'}`} />
-                                          <span className="font-semibold text-gray-800 text-xs leading-tight">{industry.title}</span>
-                                      </button>
-                                  ))}
-                                  <button onClick={() => handleMultiSelectToggle('industry', 'Custom')} className={`p-5 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md ${params.industry.includes('Custom') ? 'border-gray-800 scale-105 shadow-lg ring-2 ring-gray-800/20' : 'border-gray-200 hover:border-gray-400'}`} title="Define a custom industry">
-                                      <CustomIndustryIcon className={`w-10 h-10 mb-3 transition-colors duration-200 ${params.industry.includes('Custom') ? 'text-gray-800' : 'text-gray-500 group-hover:text-gray-700'}`} />
-                                      <span className="font-semibold text-gray-800 text-xs leading-tight">Custom</span>
-                                  </button>
-                              </div>
-                            </div>
-                        </div>
-                        {params.industry.includes('Custom') && (
-                            <div className="mt-4">
-                                <label className={labelStyles}>Custom Industry Definition *</label>
-                                <textarea value={params.customIndustry} onChange={e => handleChange('customIndustry', e.target.value)} rows={2} className={inputStyles} placeholder="Describe the custom industry or niche sector..." />
-                            </div>
-                        )}
-                    </div>
-                );
-            case 3: // Partnership & Objectives - This case is now split into multiple cards
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center shadow-md border border-gray-200">
-                            <span className="text-2xl">🤝</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Partnership & Strategic Objectives</h3>
-                            <p className="text-gray-600 text-sm">Define your ideal partner and core strategic objectives.</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-8">
-                            <label className={`${labelStyles} text-base`}>Describe Your Ideal Partner *</label>
-                            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mt-3">
-                              <textarea value={params.idealPartnerProfile} onChange={e => handleChange('idealPartnerProfile', e.target.value)} rows={5} className={`${inputStyles} text-base resize-none`} placeholder="Describe your ideal strategic partner in detail..." />
-                              <p className="text-sm text-gray-600 mt-3 flex items-center gap-2">
-                                <span className="text-gray-800">💡</span>
-                                Specificity enables precise matching algorithms.
-                              </p>
-                            </div>
-                        </div>
-
-                        <div className="mt-8">
-                            <label className={`${labelStyles} text-base`}>Define Core Strategic Objective (The 'Why') *</label>
-                            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mt-3">
-                              <textarea value={params.problemStatement} onChange={e => handleChange('problemStatement', e.target.value)} rows={6} className={`${inputStyles} text-base resize-none`} placeholder="Articulate your strategic objective. What challenge are you addressing? What opportunity are you pursuing?" />
-                              <p className="text-sm text-gray-600 mt-3 flex items-center gap-2">
-                                <span className="text-gray-800">🎯</span>
-                                Clear objectives enable targeted, actionable intelligence.
-                              </p>
-                            </div>
-                        </div>
-                    </div>
-                );
-            case 4: // Analysis Configuration - This case is now split into multiple cards
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center shadow-md border border-gray-200">
-                            <span className="text-2xl">⚙️</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Analysis Configuration</h3>
-                            <p className="text-gray-600 text-sm">Configure your analysis frameworks and AI intelligence settings.</p>
-                          </div>
-                        </div>
-
-                        <div>
-                            <div className="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-4">
-                              <h4 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-3">
-                                <span className="text-gray-500">📊</span>
-                                Analysis Tiers (Methodology)
-                              </h4>
-                              <p className="text-gray-600 text-sm md:text-base">Select one or more strategic frameworks for your report. The AI will synthesize the outputs into a single, cohesive intelligence blueprint. Unsure which to choose? Ask the Nexus Inquire AI in the left panel for guidance.</p>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-8">
-                            {currentTiers.length > 0 ? currentTiers.map((tier) => (
-                                      <label key={tier.id} className={`p-6 md:p-8 rounded-2xl text-left border-2 transition-all duration-300 w-full flex flex-col h-full cursor-pointer bg-white hover:bg-gray-50 shadow-md hover:shadow-lg ${params.tier.includes(tier.id) ? 'border-gray-800 scale-105 shadow-xl ring-2 ring-gray-800/20' : 'border-gray-200 hover:border-gray-400'}`}>
-                                          <div className="flex justify-between items-start mb-4">
-                                          <span className="font-bold text-gray-900 text-2xl">{tier.title}</span>
-                                              <input
-                                                  type="checkbox"
-                                                  checked={params.tier.includes(tier.id)}
-                                                  onChange={() => handleMultiSelectToggle('tier', tier.id)}
-                                                  className="h-6 w-6 rounded border-gray-300 text-gray-800 focus:ring-gray-800 focus:ring-2"
-                                              />
-                                          </div>
-                                          <p className="text-base text-gray-600 mb-6 flex-grow">{tier.desc}</p>
-                                          <div className="border-t border-gray-200 pt-4">
-                                              <p className="text-sm font-bold text-gray-800 mb-3 uppercase tracking-wide">Capabilities</p>
-                                              <ul className="text-sm text-gray-600 space-y-2">
-                                                  {tier.features.map(f => <li key={f} className="flex items-center gap-3"><span className="w-2 h-2 bg-gray-800 rounded-full"></span> {f}</li>)}
-                                              </ul>
-                                          </div>
-                                      </label>
-                              )) : (
-                                <div className="col-span-2 p-8 text-center bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl">
-                                  <p className="text-gray-500">No tiers available for the selected organization type.</p>
-                                  <p className="text-sm text-gray-400 mt-2">Please select a different organization type or contact support.</p>
-                                </div>
-                              )}
-                              </div>
-                         </div>
-
-                         <div className="pt-6 border-t border-gray-200">
-                             <div className="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 mb-4">
-                               <label className={`${labelStyles} text-base`}>Configure Your AI Analyst Team *</label>
-                               <p className="text-gray-600 text-sm md:text-base mt-2">Select one or more AI personas. The AI will synthesize their expertise to provide a multi-faceted analysis. This is a key driver of report quality.</p>
-                             </div>
-                             <div className="grid grid-cols-4 gap-4">
-                                 {AI_PERSONAS.map((persona) => (
-                                     <button key={persona.id} onClick={() => handleMultiSelectToggle('aiPersona', persona.id)} className={`p-5 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md ${params.aiPersona.includes(persona.id) ? 'border-gray-800 scale-105 shadow-lg ring-2 ring-gray-800/20' : 'border-gray-200 hover:border-gray-400'}`} title={persona.description}>
-                                         <persona.icon className={`w-10 h-10 mb-3 transition-colors duration-200 ${params.aiPersona.includes(persona.id) ? 'text-gray-800' : 'text-gray-500 group-hover:text-gray-700'}`} />
-                                         <span className="font-semibold text-gray-800 text-xs leading-tight">{persona.title}</span>
-                                     </button>
-                                 ))}
-                                 <button onClick={() => handleMultiSelectToggle('aiPersona', 'Custom')} className={`p-5 rounded-xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center h-full group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md ${params.aiPersona.includes('Custom') ? 'border-gray-800 scale-105 shadow-lg ring-2 ring-gray-800/20' : 'border-gray-200 hover:border-gray-400'}`} title="Define a custom persona">
-                                     <CustomPersonaIcon className={`w-10 h-10 mb-3 transition-colors duration-200 ${params.aiPersona.includes('Custom') ? 'text-gray-800' : 'text-gray-500 group-hover:text-gray-700'}`} />
-                                     <span className="font-semibold text-gray-800 text-xs leading-tight">Custom</span>
-                                 </button>
-                             </div>
-
-                             {params.aiPersona.includes('Custom') && (
-                                 <div className="mt-4">
-                                     <label className={labelStyles}>Custom Persona Definition *</label>
-                                     <textarea value={params.customAiPersona} onChange={e => handleChange('customAiPersona', e.target.value)} rows={3} className={inputStyles} placeholder="Describe the persona's expertise, focus, and tone..." />
-                                 </div>
-                             )}
-                         </div>
-
-                         <div className="grid md:grid-cols-2 gap-8 pt-6 border-t border-gray-200">
-                             <div>
-                                 <label className={`${labelStyles} text-base`}>Analytical Frameworks</label>
-                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mt-3 space-y-3">
-                                     {ANALYTICAL_LENSES.map(lens => (
-                                         <label key={lens} className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200 border-2 ${params.analyticalLens?.includes(lens) ? 'border-gray-800 bg-gray-100 shadow-sm' : 'border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50'}`}>
-                                             <input type="checkbox" checked={params.analyticalLens?.includes(lens)} onChange={() => handleMultiSelectToggle('analyticalLens', lens)} className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800 focus:ring-2" />
-                                             <span className="text-base font-medium text-gray-800">{lens}</span>
-                                         </label>
-                                     ))}
-                                 </div>
-                             </div>
-                             <div>
-                                 <label className={`${labelStyles} text-base`}>Communication Styles</label>
-                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mt-3 space-y-3">
-                                     {TONES_AND_STYLES.map(style => (
-                                         <label key={style} className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200 border-2 ${params.toneAndStyle?.includes(style) ? 'border-gray-800 bg-gray-100 shadow-sm' : 'border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50'}`}>
-                                             <input type="checkbox" checked={params.toneAndStyle?.includes(style)} onChange={() => handleMultiSelectToggle('toneAndStyle', style)} className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800 focus:ring-2"/>
-                                             <span className="text-base font-medium text-gray-800">{style}</span>
-                                         </label>
-                                     ))}
-                                 </div>
-                             </div>
-                         </div>
-                    </div>
-                );
-            case 12: // Review & Generate
-                const isInvalid = (field: keyof ReportParameters, condition?: boolean) => {
-                    const value = params[field];
-                    if (condition === false) return false; // Explicitly false condition means don't validate
-                    if (Array.isArray(value)) return value.length === 0;
-                    if (typeof value === 'string') return !value.trim();
-                    return false;
-                };
-
-                const summaryItemClasses = (invalid: boolean) => // Keep this function as it is
-                    `p-3 rounded-lg transition-colors ${invalid ? 'bg-red-100 border border-red-200' : 'bg-gray-50'}`;
-
-                const SummaryItem: React.FC<{label: string, value: React.ReactNode, invalid?: boolean}> = ({label, value, invalid = false}) => (
-                    <div className={summaryItemClasses(invalid)}>
-                        <div className="text-sm font-semibold text-gray-600">{label}</div>
-                        <div className="text-gray-900 pl-2 mt-1">{value || <span className="text-red-600 italic">Not Provided</span>}</div>
-                    </div>
-                );
-
-                return (
-                      <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
-                          <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center shadow-md border border-gray-200">
-                              <span className="text-2xl">🚀</span>
-                            </div>
-                            <div>
-                              <h3 className="text-xl md:text-2xl font-bold text-gray-900">Final Review & Generation</h3>
-                              <p className="text-gray-600 text-sm">Review the quality assessment and generate your report.</p>
-                            </div>
-                          </div>
-
-                        <QualityAnalysis params={params} />
-
-                        {/* Nexus Brain Integration - Show available analysis */}
-                        {currentPage === 4 && (
-                          <div className="my-6 p-6 bg-blue-50 border border-blue-200 rounded-xl">
-                            <h4 className="text-lg font-semibold text-nexus-accent-cyan mb-4 flex items-center gap-2">
-                              <span className="text-blue-600">🧠</span>
-                              Nexus Brain Analysis Available
-                            </h4>
-                            <p className="text-sm text-gray-700 mb-4">
-                              Before generating your final report, you can use the **Nexus Inquire AI** panel on the left to run advanced analysis on your defined region and objectives.
-                              The Nexus Brain will provide RROI diagnosis, TPT simulations, and SEAM ecosystem design.
-                            </p>
-                            <div className="text-xs text-nexus-text-muted">
-                              Note: This analysis will be automatically included in your final report generation.
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="my-6">
-                            <h4 className="text-lg font-semibold text-gray-800 mb-4">Global Trade Intelligence</h4>
-                            <div className="mb-8">
-                                {(() => {
-                                    const sampleTradeVolume = 2500000000;
-                                    const sampleTariffRate = 15;
-                                    const sampleMarkets = ['Vietnam', 'India', 'Mexico', 'Brazil', 'Indonesia'];
-                                    const analysis = TradeDisruptionAnalyzer.calculateDisruptionImpact(sampleTradeVolume, sampleTariffRate, sampleMarkets, 35);
-                                    return <TradeDisruptionDisplay analysis={analysis} />;
-                                })()}
-                            </div>
-                            <div className="mb-8">
-                                <MarketDiversificationDashboard
-                                    currentMarkets={{ 'United States': 45, 'China': 25, 'European Union': 20, 'Japan': 10 }}
-                                    potentialMarkets={['Vietnam', 'India', 'Mexico', 'Brazil', 'Indonesia', 'Turkey', 'South Africa', 'Thailand']}
-                                    tradeDisruptionRisk={0.6}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="space-y-4 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <SummaryItem label="Report Name" value={params.reportName} invalid={isInvalid('reportName')} />
-                              <SummaryItem label="Operator" value={`${params.userName || 'N/A'} (${params.organizationType})`} invalid={isInvalid('userName')} />
-                              <SummaryItem label="Analysis Tiers" value={<ul className="list-disc list-inside space-y-1">{params.tier.map(t => <li key={t} className="text-sm">{currentTiers.find(tier => tier.id === t)?.title || t}</li>)}</ul>} invalid={isInvalid('tier')} />
-                              <SummaryItem label="Geographic Focus" value={`${params.region || 'N/A'}`} invalid={isInvalid('region')} />
-                              <SummaryItem label="Industry Sectors" value={params.industry.filter(i=>i !== 'Custom').join(', ') || 'N/A'} invalid={isInvalid('industry')} />
-                              <SummaryItem label="Custom Sector" value={params.customIndustry || 'Not specified'} invalid={isInvalid('customIndustry', params.industry.includes('Custom'))} />
-                            </div>
-                            <div className="border-t border-gray-200 pt-4 space-y-4">
-                              <SummaryItem label="Strategic Objective" value={<div className="italic text-gray-800 bg-gray-100 p-3 rounded-lg border border-gray-200">"{params.problemStatement}"</div>} invalid={isInvalid('problemStatement')} />
-                              <SummaryItem label="AI Personas" value={<ul className="list-disc list-inside space-y-1">{params.aiPersona.filter(p=>p !== 'Custom').map(p => <li key={p} className="text-sm">{p}</li>)}</ul>} invalid={isInvalid('aiPersona')} />
-                              <SummaryItem label="Custom Profile" value={params.customAiPersona || 'Not configured'} invalid={isInvalid('customAiPersona', params.aiPersona.includes('Custom'))} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            case 5: // Risk Assessment
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center shadow-md border border-red-200">
-                            <span className="text-2xl">⚠️</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Risk Assessment</h3>
-                            <p className="text-gray-600 text-sm">Evaluate potential risks and mitigation strategies.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">Risk assessment framework will be implemented here. This step evaluates potential challenges and develops mitigation strategies for your regional intelligence initiative.</p>
-                        </div>
-                    </div>
-                );
-            case 6: // SEAM Architecture
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shadow-md border border-blue-200">
-                            <span className="text-2xl">🏗️</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">SEAM Architecture</h3>
-                            <p className="text-gray-600 text-sm">Design your partner ecosystem and strategic alliances.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">SEAM (Strategic Ecosystem Architecture Model) framework will be implemented here. This step designs the optimal partner network and strategic alliances for your initiative.</p>
-                        </div>
-                    </div>
-                );
-            case 7: // Technology Transfer
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shadow-md border border-green-200">
-                            <span className="text-2xl">🔄</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Technology Transfer</h3>
-                            <p className="text-gray-600 text-sm">Plan technology integration and knowledge transfer.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">Technology transfer planning will be implemented here. This step addresses innovation integration, knowledge transfer, and technology adoption strategies.</p>
-                        </div>
-                    </div>
-                );
-            case 8: // Implementation Roadmap
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shadow-md border border-purple-200">
-                            <span className="text-2xl">🗺️</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Implementation Roadmap</h3>
-                            <p className="text-gray-600 text-sm">Develop detailed execution timeline and milestones.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">Implementation roadmap development will be implemented here. This step creates detailed execution timelines, milestones, and project management frameworks.</p>
-                        </div>
-                    </div>
-                );
-            case 9: // Resource Allocation
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center shadow-md border border-yellow-200">
-                            <span className="text-2xl">💰</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Resource Allocation</h3>
-                            <p className="text-gray-600 text-sm">Optimize resource distribution and budget planning.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">Resource allocation optimization will be implemented here. This step develops budget planning, resource distribution strategies, and financial frameworks.</p>
-                        </div>
-                    </div>
-                );
-            case 10: // Performance Metrics
-                return (
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 space-y-8">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center shadow-md border border-indigo-200">
-                            <span className="text-2xl">📊</span>
-                          </div>
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">Performance Metrics</h3>
-                            <p className="text-gray-600 text-sm">Establish success measurement and KPI frameworks.</p>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <p className="text-gray-700">Performance metrics and KPI frameworks will be implemented here. This step establishes success measurement systems and monitoring dashboards.</p>
-                        </div>
-                    </div>
-                );
-            case 11: // Sustainability & Final Setup
-                return (
-                      <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200">
-                          <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shadow-md border border-green-200">
-                              <span className="text-2xl">🌱</span>
-                            </div>
-                            <div>
-                              <h3 className="text-xl md:text-2xl font-bold text-gray-900">Sustainability Planning & Final Setup</h3>
-                              <p className="text-gray-600 text-sm">Configure your report format and prepare for long-term monitoring.</p>
-                            </div>
-                          </div>
-
-                        <div className="mb-8">
-                            <h4 className="text-lg font-semibold text-gray-800 mb-4">Intelligence Dashboard Setup</h4>
-                            <p className="text-sm text-gray-600 mb-4">
-                                Your 12-step intelligence framework is complete. Configure your final report specifications and establish monitoring parameters for ongoing regional intelligence.
-                            </p>
-                        </div>
-
-                        {/* Report Length & Output Format - Moved to final step */}
-                        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-                          <h4 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-3">
-                            <span className="text-gray-500">📊</span>
-                            Report Length & Output Format
-                          </h4>
-                          <p className="text-gray-600 text-sm md:text-base mb-6">Choose the depth of analysis and output format that best fits your completed intelligence framework.</p>
-
-                          <div className="grid md:grid-cols-2 gap-6">
-                              <div>
-                                  <label className={`${labelStyles} text-base`}>Report Length *</label>
-                                  <div className="bg-white p-4 rounded-xl border border-gray-200 mt-3 space-y-3">
-                                      {[
-                                          { id: 'snapshot', title: 'Snapshot Report', desc: '2-page executive summary with key recommendations', pages: '2 pages' },
-                                          { id: 'brief', title: 'Brief Analysis', desc: '5-7 page analysis with core findings and recommendations', pages: '5-7 pages' },
-                                          { id: 'standard', title: 'Standard Report', desc: '10-15 page comprehensive analysis with full methodology', pages: '10-15 pages' },
-                                          { id: 'comprehensive', title: 'Comprehensive Analysis', desc: '20-30 page in-depth analysis with all modules and appendices', pages: '20-30 pages' }
-                                      ].map((option) => (
-                                          <label key={option.id} className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200 border-2 ${params.reportLength === option.id ? 'border-gray-800 bg-gray-100 shadow-sm' : 'border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50'}`}>
-                                              <input type="radio" name="reportLength" value={option.id} checked={params.reportLength === option.id} onChange={(e) => handleChange('reportLength', e.target.value)} className="h-5 w-5 text-gray-800 focus:ring-gray-800 focus:ring-2" />
-                                              <div className="flex-grow">
-                                                  <div className="font-semibold text-gray-800">{option.title} <span className="text-sm text-gray-500">({option.pages})</span></div>
-                                                  <div className="text-sm text-gray-600">{option.desc}</div>
-                                              </div>
-                                          </label>
-                                      ))}
-                                  </div>
-                              </div>
-
-                              <div>
-                                  <label className={`${labelStyles} text-base`}>Output Format *</label>
-                                  <div className="bg-white p-4 rounded-xl border border-gray-200 mt-3 space-y-3">
-                                      {[
-                                          { id: 'report', title: 'Report Only', desc: 'Comprehensive intelligence report' },
-                                          { id: 'letter', title: 'Business Letter Only', desc: 'Professional outreach letter' },
-                                          { id: 'both', title: 'Report + Letter', desc: 'Both report and business letter' }
-                                      ].map((option) => (
-                                          <label key={option.id} className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200 border-2 ${params.outputFormat === option.id ? 'border-gray-800 bg-gray-100 shadow-sm' : 'border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50'}`}>
-                                              <input type="radio" name="outputFormat" value={option.id} checked={params.outputFormat === option.id} onChange={(e) => handleChange('outputFormat', e.target.value)} className="h-5 w-5 text-gray-800 focus:ring-gray-800 focus:ring-2" />
-                                              <div className="flex-grow">
-                                                  <div className="font-semibold text-gray-800">{option.title}</div>
-                                                  <div className="text-sm text-gray-600">{option.desc}</div>
-                                              </div>
-                                          </label>
-                                      ))}
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-
-                        <QualityAnalysis params={params} />
-
-                        {/* Nexus Brain Integration - Show available analysis */}
-                        {currentPage === 4 && (
-                          <div className="my-6 p-6 bg-blue-50 border border-blue-200 rounded-xl">
-                            <h4 className="text-lg font-semibold text-nexus-accent-cyan mb-4 flex items-center gap-2">
-                              <span className="text-blue-600">🧠</span>
-                              Nexus Brain Analysis Available
-                            </h4>
-                            <p className="text-sm text-gray-700 mb-4">
-                              Your 12-step intelligence framework is complete. Use the **Nexus Inquire AI** panel on the left to run final advanced analysis before generating your comprehensive report.
-                            </p>
-                            <div className="text-xs text-nexus-text-muted">
-                              Note: All analysis will be automatically included in your final intelligence report.
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="space-y-4 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <SummaryItem label="Report Name" value={params.reportName} invalid={isInvalid('reportName')} />
-                              <SummaryItem label="Operator" value={`${params.userName || 'N/A'} (${params.organizationType})`} invalid={isInvalid('userName')} />
-                              <SummaryItem label="Analysis Tiers" value={<ul className="list-disc list-inside space-y-1">{params.tier.map(t => <li key={t} className="text-sm">{currentTiers.find(tier => tier.id === t)?.title || t}</li>)}</ul>} invalid={isInvalid('tier')} />
-                              <SummaryItem label="Geographic Focus" value={`${params.region || 'N/A'}`} invalid={isInvalid('region')} />
-                              <SummaryItem label="Industry Sectors" value={params.industry.filter(i=>i !== 'Custom').join(', ') || 'N/A'} invalid={isInvalid('industry')} />
-                              <SummaryItem label="Custom Sector" value={params.customIndustry || 'Not specified'} invalid={isInvalid('customIndustry', params.industry.includes('Custom'))} />
-                            </div>
-                            <div className="border-t border-gray-200 pt-4 space-y-4">
-                              <SummaryItem label="Strategic Objective" value={<div className="italic text-gray-800 bg-gray-100 p-3 rounded-lg border border-gray-200">"{params.problemStatement}"</div>} invalid={isInvalid('problemStatement')} />
-                              <SummaryItem label="AI Personas" value={<ul className="list-disc list-inside space-y-1">{params.aiPersona.filter(p=>p !== 'Custom').map(p => <li key={p} className="text-sm">{p}</li>)}</ul>} invalid={isInvalid('aiPersona')} />
-                              <SummaryItem label="Custom Profile" value={params.customAiPersona || 'Not configured'} invalid={isInvalid('customAiPersona', params.aiPersona.includes('Custom'))} />
-                            </div>
-                        </div>
-                    </div>
-                );
-            default: return null;
-        }
-    };
 
     // Reset terms acceptance on page refresh
     useEffect(() => {
