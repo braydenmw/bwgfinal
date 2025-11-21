@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import type { View } from '../types.ts';
-import { NexusLogo } from './Icons.tsx';
+import { NexusLogo, CpuChipIcon } from './Icons.tsx';
 import { ORIGINAL_NAV_ITEMS } from '../constants.tsx';
 
 interface HeaderProps {
     currentView: View;
     onViewChange: (view: any) => void;
+    onOpenMultiAgentDashboard: () => void;
 }
 
 const NAV_ITEMS = ORIGINAL_NAV_ITEMS.filter(item => item.id !== 'technical-manual');
@@ -26,7 +27,7 @@ const NavLink: React.FC<{
     </button>
 );
 
-export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
+export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange, onOpenMultiAgentDashboard }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const handleNavClick = (view: View) => {
@@ -65,6 +66,12 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => 
 
                     {/* Contact Button & Mobile Menu Toggle */}
                     <div className="flex items-center gap-4">
+                        <button 
+                            onClick={onOpenMultiAgentDashboard}
+                            className="hidden lg:flex items-center gap-2 bg-nexus-surface-800 text-nexus-text-secondary font-semibold px-4 py-2 rounded-lg hover:bg-nexus-surface-700 hover:text-nexus-text-primary transition-colors duration-300"
+                        >
+                            <CpuChipIcon className="w-5 h-5" /> Multi-Agent Status
+                        </button>
                         <button className="hidden lg:block bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300">
                             Contact Us
                         </button>

@@ -378,6 +378,43 @@ export const SymbiosisGraphicIcon: React.FC<React.SVGProps<SVGSVGElement>> = (pr
     </Icon>
 );
 
+export const CpuChipIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 21v-1.5M15.75 3v1.5M12 4.5v-1.5m0 18v-1.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 6.375a1.5 1.5 0 00-1.5 1.5v8.25c0 .828.672 1.5 1.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-8.25a1.5 1.5 0 00-1.5-1.5H5.25z" />
+    </Icon>
+);
+
+export const ArrowPathIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.655v-4.992m0 0h-4.992m4.992 0l-3.181-3.183a8.25 8.25 0 00-11.667 0l-3.181 3.183" />
+    </Icon>
+);
+
+export const TargetIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9a6 6 0 100 12 6 6 0 000-12z" />
+    </Icon>
+);
+
+export const BrainCircuitIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 009-9h-9v9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a9 9 0 019 9h-9V3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 01-9-9h9v9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a9 9 0 00-9 9h9V3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 10-7.072 7.072" />
+    </Icon>
+);
+
+export const RoadmapIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25L9 3m0 0l5.25 2.25M9 3v10.5M14.25 5.25L9 7.5M3.75 5.25L9 7.5m0 0v10.5m0-10.5L3.75 5.25M9 7.5L14.25 5.25m0 0l5.25 2.25m-5.25-2.25v10.5m5.25-10.5L9 18" />
+    </Icon>
+);
+
 export const CustomPersonaIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -388,14 +425,6 @@ export const CustomPersonaIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props
 export const LightbulbIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-4.18v-.75c0-1.035-.84-1.875-1.875-1.875h-.75A1.875 1.875 0 008.25 8.25v.75a6.01 6.01 0 001.5 4.18M12 18v-5.25M8.25 21h7.5M12 13.5V21" />
-    </Icon>
-);
-
-export const TargetIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <Icon {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9a6 6 0 100 12 6 6 0 000-12z" />
     </Icon>
 );
 

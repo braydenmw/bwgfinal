@@ -505,3 +505,138 @@ export interface ReportData {
   analysisPoints: string[];
   recommendations: string[];
 }
+
+// --- MULTI-AGENT AI SYSTEM TYPES ---
+
+export type AIAgentProvider = 'google-gemini' | 'openai-gpt' | 'anthropic-claude';
+
+export interface AIAgentConfig {
+  provider: AIAgentProvider;
+  model: string;
+  apiKey: string;
+  temperature?: number;
+  maxTokens?: number;
+  enabled: boolean;
+  priority: number; // Higher number = higher priority
+  specializations: string[]; // Areas this agent excels at
+  rateLimits: {
+    requestsPerMinute: number;
+    requestsPerHour: number;
+  };
+}
+
+export interface AgentResponse {
+  agentId: string;
+  provider: AIAgentProvider;
+  model: string;
+  content: string;
+  confidence: number; // 0-1
+  reasoning: string;
+  processingTime: number; // milliseconds
+  tokensUsed: number;
+  timestamp: string;
+  metadata?: Record<string, any>;
+}
+
+export interface ConsensusResult {
+  consensusContent: string;
+  confidence: number; // 0-1
+  agreementLevel: 'unanimous' | 'majority' | 'split' | 'conflicting';
+  participatingAgents: string[];
+  dissentingOpinions: {
+    agentId: string;
+    alternativeContent: string;
+    reasoning: string;
+  }[];
+  metadata: {
+    totalAgents: number;
+    consensusMethod: 'weighted-voting' | 'majority-vote' | 'confidence-weighted';
+    processingTime: number;
+  };
+}
+
+export interface MultiAgentTask {
+  id: string;
+  type: 'analysis' | 'research' | 'validation' | 'generation' | 'consensus';
+  prompt: string;
+  context?: Record<string, any>;
+  requiredAgents: number;
+  timeout: number; // milliseconds
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  consensusMethod: 'weighted-voting' | 'majority-vote' | 'confidence-weighted';
+}
+
+export interface MultiAgentAnalysis {
+  task: MultiAgentTask;
+  responses: AgentResponse[];
+  consensus: ConsensusResult;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  startTime: string;
+  endTime?: string;
+  error?: string;
+}
+
+export interface AgentHealthStatus {
+  agentId: string;
+  status: 'healthy' | 'degraded' | 'unhealthy' | 'offline';
+  lastResponseTime: number;
+  errorCount: number;
+  successRate: number; // 0-1
+  rateLimitRemaining: number;
+  averageResponseTime: number;
+}
+
+export interface MultiAgentOrchestratorConfig {
+  enabledAgents: string[];
+  defaultConsensusMethod: 'weighted-voting' | 'majority-vote' | 'confidence-weighted';
+  minConsensusThreshold: number; // 0-1
+  maxParallelTasks: number;
+  taskTimeout: number;
+  retryAttempts: number;
+  fallbackToSingleAgent: boolean;
+}
+
+export interface MultiAgentDashboardData {
+  activeTasks: MultiAgentAnalysis[];
+  agentHealth: AgentHealthStatus[];
+  recentConsensus: ConsensusResult[];
+  performanceMetrics: {
+    averageResponseTime: number;
+    consensusAccuracy: number;
+    agentUptime: Record<string, number>;
+    costEfficiency: number;
+  };
+  systemStatus: 'operational' | 'degraded' | 'maintenance';
+}
+
+export interface AgentSpecialization {
+  category: string;
+  description: string;
+  agents: {
+    provider: AIAgentProvider;
+    model: string;
+    expertise: string[];
+    performance: number; // 0-1
+  }[];
+}
+
+// Multi-agent enhanced versions of existing types
+export interface MultiAgentReportParameters extends ReportParameters {
+  multiAgentEnabled: boolean;
+  selectedAgents: string[];
+  consensusMethod: 'weighted-voting' | 'majority-vote' | 'confidence-weighted';
+  minConsensusThreshold: number;
+}
+
+export interface MultiAgentCapabilitiesResponse extends AiCapabilitiesResponse {
+  multiAgentFeatures: {
+    availableAgents: AIAgentConfig[];
+    consensusMethods: string[];
+    specializations: AgentSpecialization[];
+    performanceMetrics: {
+      accuracy: number;
+      speed: number;
+      cost: number;
+    };
+  };
+}

@@ -23,11 +23,65 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onAccept, onDec
             </header>
 
             <div className="p-6 md:p-8 max-w-6xl mx-auto">
-                <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 md:p-6">
-                    <div className="text-center mb-6 pb-4 border-b border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Terms & Conditions</h2>
-                        <p className="text-sm text-gray-600">BW Nexus AI Platform Agreement</p>
+                {/* How to Use Section */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg shadow-sm p-6 md:p-8 mb-6">
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl font-extrabold text-gray-900 mb-4">How to Use BW Nexus AI</h2>
+                        <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                            Your guide to leveraging the world's first Strategic Symbiosis System for regional economic development and partnership creation.
+                        </p>
                     </div>
+    
+                    <div className="mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Your Journey: The 12-Step Intelligence Framework</h3>
+                        <p className="text-gray-700 mb-6 text-center max-w-2xl mx-auto">
+                            Our systematic approach ensures comprehensive analysis and actionable insights. The process is broken down into four key phases, each designed to build upon the last.
+                        </p>
+    
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="bg-white p-6 rounded-lg border border-gray-200">
+                                <h4 className="text-lg font-bold text-blue-600 mb-2">Phase 1: Scope & Context</h4>
+                                <p className="text-gray-700">Define <strong>who you are</strong>, <strong>where you are looking</strong>, and <strong>what you want to achieve</strong>. This creates the essential "brief" for our AI.</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-lg border border-gray-200">
+                                <h4 className="text-lg font-bold text-blue-600 mb-2">Phase 2: Analysis & Strategy</h4>
+                                <p className="text-gray-700">Configure your <strong>AI analysis team</strong> and run advanced diagnostics, including due diligence, risk assessment, and partner exploration.</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-lg border border-gray-200">
+                                <h4 className="text-lg font-bold text-blue-600 mb-2">Phase 3: Execution & Planning</h4>
+                                <p className="text-gray-700">Move from analysis to action. Use tools to forecast growth, model stakeholder perspectives, and build a framework for strong relationships.</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-lg border border-gray-200">
+                                <h4 className="text-lg font-bold text-blue-600 mb-2">Phase 4: Finalization & Generation</h4>
+                                <p className="text-gray-700">Assess long-term viability, review all your inputs, and instruct the multi-agent AI to synthesize everything into a comprehensive <strong>Intelligence Blueprint</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div className="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">The Outcome: A Partnership Toolkit</h3>
+                        <p className="text-gray-700 mb-6 text-center">
+                            At the end of this process, you will receive professional-grade deliverables that speak the language of global investors and partners.
+                        </p>
+    
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="border-l-4 border-blue-500 pl-4">
+                                <h4 className="font-bold text-gray-900 mb-2">World-Class Intelligence Report</h4>
+                                <p className="text-gray-700 text-sm">A comprehensive report featuring structured, data-driven analysis using proprietary frameworks to reveal economic DNA, ecosystem architectures, and strategic recommendations.</p>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-4">
+                                <h4 className="font-bold text-gray-900 mb-2">Partnership Blueprint & Economic Projections</h4>
+                                <p className="text-gray-700 text-sm">Evidence-backed partnership cases including insights into readiness for investment, symbiotic ecosystems, and simulations of policy or project impacts, all customized to specific goals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 md:p-6">
+                        <div className="text-center mb-6 pb-4 border-b border-gray-200">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2">Terms & Conditions</h2>
+                            <p className="text-sm text-gray-600">BW Nexus AI Platform Agreement</p>
+                        </div>
                     <div className="prose max-w-none text-gray-700 text-xs leading-tight prose-p:mb-2 prose-strong:font-semibold prose-strong:text-gray-900">
                         <section className="mb-3">
                             <h3 className="text-xs font-bold text-gray-900 mb-1">1. Acceptance of Terms</h3>

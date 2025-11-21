@@ -7,9 +7,6 @@ import { Inquire } from './components/Inquire.tsx';
 import ReportGenerator from './components/ReportGenerator.tsx';
 import ReportViewer from './components/ReportViewer.tsx';
 import Compliance from './components/Compliance.tsx';
-import SymbiosisChatModal from './components/SymbiosisChatModal.tsx';
-import { AnalysisModal } from './components/AnalysisModal.tsx';
-import { LetterGeneratorModal } from './components/LetterGeneratorModal.tsx';
 import { generateLetterStream, fetchSymbiosisResponse } from './services/nexusService.ts';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { COUNTRIES, INDUSTRIES, AI_PERSONAS, ORGANIZATION_TYPES, ANALYTICAL_LENSES, TONES_AND_STYLES } from './constants.tsx';
@@ -69,11 +66,6 @@ function App() {
   // Wizard step state for 12-step workflow
   const [currentWizardStep, setCurrentWizardStep] = useState<number>(1);
 
-  // State for modals and shared context
-  const [symbiosisContext, setSymbiosisContext] = useState<SymbiosisContext | null>(null);
-  const [analysisItem, setAnalysisItem] = useState<LiveOpportunityItem | null>(null);
-  const [userProfile, setUserProfile] = useState<UserProfileType | null>(null);
-  const [letterModalOpen, setLetterModalOpen] = useState(false);
 
   // --- Saved Work & Autosave Logic ---
 
@@ -182,7 +174,7 @@ function App() {
     // Redirect to external site or show message
     window.location.href = 'https://www.bwga.com.au';
   };
-  
+
   const handleApplySuggestions = useCallback((suggestions: ReportSuggestions) => {
       setReportParams(prev => {
           const newParams = {...prev};
@@ -192,15 +184,15 @@ function App() {
               if (value === undefined) continue;
 
               if (typedKey === 'industry') {
-                   if(typeof value === 'string') {
-                    const matchedIndustry = INDUSTRIES.find(i => i.id.toLowerCase() === value.toLowerCase() || i.title.toLowerCase() === value.toLowerCase());
-                    if (matchedIndustry) {
-                        newParams.industry = [matchedIndustry.id];
-                    } else {
-                        newParams.industry = ['Custom'];
-                        newParams.customIndustry = value;
-                    }
-                  }
+                    if(typeof value === 'string') {
+                     const matchedIndustry = INDUSTRIES.find(i => i.id.toLowerCase() === value.toLowerCase() || i.title.toLowerCase() === value.toLowerCase());
+                     if (matchedIndustry) {
+                         newParams.industry = [matchedIndustry.id];
+                     } else {
+                         newParams.industry = ['Custom'];
+                         newParams.customIndustry = value;
+                     }
+                   }
               } else {
                   // We know from the type definition that these keys are shared and compatible.
                   (newParams as Record<string, any>)[typedKey] = value;
@@ -223,17 +215,6 @@ function App() {
     }
   }, []);
 
-  const handleAnalyzeOpportunity = useCallback((item: LiveOpportunityItem) => {
-    setAnalysisItem(item);
-  }, []);
-
-  const handleStartSymbiosis = useCallback((context: SymbiosisContext) => {
-    setSymbiosisContext(context);
-  }, []);
-
-  const handleGenerateLetter = useCallback(() => {
-    setLetterModalOpen(true);
-  }, []);
 
   // Wizard step handlers
   const handleNextStep = useCallback(() => {
@@ -256,7 +237,7 @@ function App() {
       case 'who-we-are':
         return <div className="view-container"><WhoWeAre onViewChange={handleViewChange} /></div>;
       case 'opportunities':
-        return <div className="view-container"><LiveOpportunities onAnalyze={handleAnalyzeOpportunity} onStartSymbiosis={handleStartSymbiosis} /></div>;
+        return <div className="view-container"><LiveOpportunities onAnalyze={() => {}} onStartSymbiosis={() => {}} /></div>;
       case 'report':
         return (
           <div className="h-full">
@@ -272,7 +253,7 @@ function App() {
                     onDeleteReport={handleDeleteReport}
                     onScopeComplete={() => {}}
                     onReportUpdate={handleReportUpdate}
-                    onProfileUpdate={setUserProfile}
+                    onProfileUpdate={() => {}}
                     isGenerating={isGeneratingReport}
                   />
                 </div>
@@ -282,8 +263,8 @@ function App() {
                     parameters={reportParams}
                     isGenerating={isGeneratingReport}
                     onReset={handleResetReport}
-                    onStartSymbiosis={handleStartSymbiosis}
-                    onGenerateLetter={handleGenerateLetter}
+                    onStartSymbiosis={() => {}}
+                    onGenerateLetter={() => {}}
                     error={reportError}
                     wizardStep={currentWizardStep}
                     onNextStep={handleNextStep}
@@ -299,7 +280,7 @@ function App() {
                 onParamsChange={setReportParams}
                 onReportUpdate={handleReportUpdate}
                 isGenerating={isGeneratingReport}
-                onProfileUpdate={setUserProfile}
+                onProfileUpdate={() => {}}
                 // Pass all Inquire props down for the co-pilot view
                 onApplySuggestions={handleApplySuggestions}
                 savedReports={savedReports}
@@ -322,8 +303,6 @@ function App() {
         return <div className="view-container"><WhoWeAre onViewChange={handleViewChange} /></div>;
     }
   };
-  
-
 
 
   // Show terms and conditions if not accepted and trying to access report
@@ -341,7 +320,11 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="aurora-background" style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
-        <Header currentView={currentView} onViewChange={handleViewChange} />
+        <Header
+            currentView={currentView}
+            onViewChange={handleViewChange}
+            onOpenMultiAgentDashboard={() => {}}
+        />
         <main className="pt-20 flex-grow overflow-hidden" style={{height: 'calc(100vh - 80px)'}}>
           {/* The container below ensures consistent padding and max-width for non-workspace views */}
           <div className={`h-full ${currentView !== 'report' ? 'container mx-auto px-4 md:px-8' : 'p-4 md:p-8'}`}>
@@ -355,45 +338,6 @@ function App() {
             </div>
         )}
 
-        {symbiosisContext && (
-          <SymbiosisChatModal
-            isOpen={!!symbiosisContext}
-            onClose={() => setSymbiosisContext(null)}
-            context={symbiosisContext}
-            onSendMessage={(history) => fetchSymbiosisResponse(symbiosisContext, history)}
-          />
-        )}
-
-        {analysisItem && (
-          <AnalysisModal
-            item={analysisItem}
-            region={userProfile?.userCountry || analysisItem.country}
-            onClose={() => setAnalysisItem(null)}
-          />
-        )}
-
-        {letterModalOpen && (
-          <LetterGeneratorModal
-            isOpen={letterModalOpen}
-            onClose={() => setLetterModalOpen(false)}
-            reportContent={reportContent} // Pass the generated report content
-            reportParameters={reportParams} // Pass the report parameters
-            onGenerate={async (content, params) => {
-              const stream = await generateLetterStream(params, content); // Modified to accept content
-              const reader = stream.getReader();
-              const decoder = new TextDecoder();
-              let result = '';
-              let decodedChunk = '';
-              while (true) {
-                const { value, done } = await reader.read();
-                if (done) break;
-                decodedChunk = decoder.decode(value, { stream: true });
-                result += decodedChunk;
-              }
-              return result;
-            }}
-          />
-        )}
       </div>
     </ErrorBoundary>
   );

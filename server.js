@@ -574,6 +574,182 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// --- MULTI-AGENT AI SYSTEM ENDPOINTS ---
+
+// Multi-agent task execution
+app.post('/api/multi-agent/analyze', async (req, res) => {
+  try {
+    const { task } = req.body;
+
+    if (!task || !task.prompt) {
+      return res.status(400).json({ error: 'Task with prompt is required' });
+    }
+
+    // For now, return a mock response until the orchestrator is properly integrated
+    const mockAnalysis = {
+      task,
+      responses: [{
+        agentId: 'mock-gemini',
+        provider: 'google-gemini',
+        model: 'gemini-pro',
+        content: 'Multi-agent analysis is currently in development. This is a placeholder response.',
+        confidence: 0.8,
+        reasoning: 'Mock response for development',
+        processingTime: 100,
+        tokensUsed: 50,
+        timestamp: new Date().toISOString()
+      }],
+      consensus: {
+        consensusContent: 'Multi-agent system is under development',
+        confidence: 0.8,
+        agreementLevel: 'unanimous',
+        participatingAgents: ['mock-gemini'],
+        dissentingOpinions: []
+      },
+      status: 'completed',
+      startTime: new Date().toISOString(),
+      endTime: new Date().toISOString()
+    };
+
+    res.json(mockAnalysis);
+  } catch (error) {
+    console.error('Multi-agent analysis error:', error);
+    res.status(500).json({ error: error.message || 'Multi-agent analysis failed' });
+  }
+});
+
+// Multi-agent status dashboard
+app.get('/api/multi-agent/status', async (req, res) => {
+  try {
+    // Mock status response
+    const mockStatus = {
+      activeTasks: [],
+      agentHealth: [
+        {
+          agentId: 'gemini-pro',
+          status: 'healthy',
+          lastResponseTime: Date.now(),
+          errorCount: 0,
+          successRate: 1.0,
+          rateLimitRemaining: 100,
+          averageResponseTime: 1500
+        }
+      ],
+      recentConsensus: [],
+      performanceMetrics: {
+        averageResponseTime: 1500,
+        consensusAccuracy: 85,
+        agentUptime: { 'gemini-pro': 100 },
+        costEfficiency: 100
+      },
+      systemStatus: 'operational'
+    };
+
+    res.json(mockStatus);
+  } catch (error) {
+    console.error('Multi-agent status error:', error);
+    res.status(500).json({ error: 'Failed to get multi-agent status' });
+  }
+});
+
+// Multi-agent capabilities
+app.get('/api/multi-agent/capabilities', async (req, res) => {
+  try {
+    // Mock capabilities response
+    const mockCapabilities = {
+      greeting: "Multi-Agent Intelligence System: Enhanced accuracy through collaborative AI analysis",
+      capabilities: [
+        {
+          title: "Cross-Validated Analysis",
+          description: "Multiple AI agents analyze and cross-validate each other's findings",
+          prompt: "Perform multi-agent analysis on [topic]"
+        }
+      ],
+      multiAgentFeatures: {
+        availableAgents: [
+          {
+            provider: 'google-gemini',
+            model: 'gemini-pro',
+            apiKey: 'configured',
+            enabled: true,
+            priority: 3,
+            specializations: ['analysis', 'research'],
+            rateLimits: { requestsPerMinute: 60, requestsPerHour: 1000 }
+          }
+        ],
+        consensusMethods: ['weighted-voting', 'majority-vote'],
+        specializations: [
+          {
+            category: 'Analysis',
+            description: 'Deep analytical capabilities',
+            agents: [{
+              provider: 'google-gemini',
+              model: 'gemini-pro',
+              expertise: ['analysis', 'research'],
+              performance: 0.85
+            }]
+          }
+        ],
+        performanceMetrics: {
+          accuracy: 85,
+          speed: 75,
+          cost: 250
+        }
+      }
+    };
+
+    res.json(mockCapabilities);
+  } catch (error) {
+    console.error('Multi-agent capabilities error:', error);
+    res.status(500).json({ error: 'Failed to get multi-agent capabilities' });
+  }
+});
+
+// Agent health status
+app.get('/api/agents/health', async (req, res) => {
+  try {
+    // Mock health response
+    const mockHealth = [
+      {
+        agentId: 'gemini-pro',
+        status: 'healthy',
+        lastResponseTime: Date.now(),
+        errorCount: 0,
+        successRate: 1.0,
+        rateLimitRemaining: 100,
+        averageResponseTime: 1500
+      }
+    ];
+
+    res.json(mockHealth);
+  } catch (error) {
+    console.error('Agent health error:', error);
+    res.status(500).json({ error: 'Failed to get agent health status' });
+  }
+});
+
+// Task status check
+app.get('/api/multi-agent/task/:taskId', async (req, res) => {
+  try {
+    const { taskId } = req.params;
+
+    // Mock task response
+    const mockTask = {
+      task: { id: taskId, type: 'analysis', prompt: 'Mock task' },
+      responses: [],
+      consensus: { consensusContent: 'Task completed', confidence: 0.8 },
+      status: 'completed',
+      startTime: new Date().toISOString(),
+      endTime: new Date().toISOString()
+    };
+
+    res.json(mockTask);
+  } catch (error) {
+    console.error('Task status error:', error);
+    res.status(500).json({ error: 'Failed to get task status' });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
