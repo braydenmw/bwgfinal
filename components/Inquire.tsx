@@ -74,6 +74,7 @@ export const Inquire = ({
     canGoNext,
     canGoPrev,
 }: InquireProps) => {
+    console.log('Inquire component rendering');
     const [query, setQuery] = useState('');
     const [loadingCommand, setLoadingCommand] = useState<BrainCommand | 'quick_scope' | null>(null);
     const [isRefining, setIsRefining] = useState(false);

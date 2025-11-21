@@ -129,15 +129,6 @@ const WhoWeAre: React.FC<WhoWeAreProps> = ({ onViewChange }) => {
                             <p className="text-lg font-bold text-white mb-2">3 months subscription $175 • 6 months subscription $395 • 12 months subscription $595</p>
                         </div>
                     </div>
-                    <button
-                        onClick={() => onViewChange('report')}
-                        className="bg-orange-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                        <div className="flex items-center gap-3 justify-center">
-                            <BlueprintIcon className="w-6 h-6" />
-                            Launch the Workspace
-                        </div>
-                    </button>
                 </section>
             </main>
 

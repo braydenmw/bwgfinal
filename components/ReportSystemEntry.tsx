@@ -3,7 +3,7 @@ import { NexusLogo, BlueprintIcon, TargetIcon, BrainCircuitIcon, RoadmapIcon, Us
 import type { View } from '../types';
 import { Header } from './Header.tsx';
 
-interface HowToUseProps {
+interface ReportSystemEntryProps {
   onProceedToTerms: () => void;
   onViewChange: (view: View) => void;
   currentView: View;
@@ -13,50 +13,44 @@ const PhaseCard: React.FC<{
     phase: string;
     title: string;
     description: string;
-    steps: { title: string; icon: React.ReactNode }[];
+    steps: string[];
     whyItMatters: string;
-}> = ({ phase, title, description, steps, whyItMatters }) => {
-    return (
-        <div className="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-gray-300 flex flex-col h-full">
-            <div className="flex-grow">
-                <div className="mb-4">
-                    <p className="text-sm font-bold uppercase tracking-wider text-gray-500">{phase}</p>
-                    <h3 className="text-2xl font-bold text-gray-900">{title}</h3>
-                    <p className="text-gray-600 mt-1">{description}</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h4 className="text-sm font-semibold text-gray-800 mb-3">Key Steps in this Phase:</h4>
-                    <div className="space-y-3">
-                        {steps.map((step, index) => (
-                            <div key={index} className="flex items-center gap-3">
-                                <div className="w-8 h-8 flex-shrink-0 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center">
-                                    {step.icon}
-                                </div>
-                                <span className="text-sm font-medium text-gray-700">{step.title}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+}> = ({ phase, title, description, steps, whyItMatters }) => (
+    <div className="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-gray-300 flex flex-col h-full">
+        <div className="flex-grow">
+            <div className="mb-4">
+                <p className="text-sm font-bold uppercase tracking-wider text-gray-500">{phase}</p>
+                <h3 className="text-2xl font-bold text-gray-900">{title}</h3>
+                <p className="text-gray-600 mt-1">{description}</p>
             </div>
-            <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-200">
-                <h4 className="text-xs font-bold uppercase text-gray-500 mb-2">Why This Matters</h4>
-                <p className="text-sm text-gray-700">{whyItMatters}</p>
+            <div className="mt-4 pt-4 border-t border-gray-200">
+                <h4 className="text-sm font-semibold text-gray-800 mb-3">Key Steps in this Phase:</h4>
+                <div className="space-y-3">
+                    {steps.map((step, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                            <span className="text-blue-600 font-semibold text-sm">✓</span>
+                            <span className="text-sm font-medium text-gray-700">{step}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
-    );
-};
+        <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-200">
+            <h4 className="text-xs font-bold uppercase text-gray-500 mb-2">Why This Matters</h4>
+            <p className="text-sm text-gray-700">{whyItMatters}</p>
+        </div>
+    </div>
+);
 
-const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, currentView }) => {
+const ReportSystemEntry: React.FC<ReportSystemEntryProps> = ({ onProceedToTerms, onViewChange, currentView }) => {
   return (
     <div className="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen">
-        {/* Main App Header */}
         <Header
             currentView={currentView}
             onViewChange={onViewChange}
         />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24 pt-32">
-            {/* Hero Section */}
             <section className="text-center">
                 <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
                     How to Use BW Nexus AI
@@ -66,7 +60,6 @@ const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, cur
                 </p>
             </section>
 
-            {/* The 12-Step Framework */}
             <section>
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Your Journey: The 12-Step Intelligence Framework</h2>
@@ -79,51 +72,50 @@ const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, cur
                     <PhaseCard
                         phase="Phase 1"
                         title="Scope & Context"
-                        description="Define who you are, where you are looking, and what you want to achieve. This creates the essential 'brief' for our AI."
+                        description="This initial phase is about building the foundation for your entire analysis. You will establish your profile, define your geographic and industry focus, and articulate your core strategic goals."
                         whyItMatters="This phase ensures the AI's entire analysis is perfectly aligned with your unique identity and strategic goals, preventing generic outputs."
                         steps={[
-                            { title: 'Step 1: Profile Setup', icon: <UsersIcon className="w-5 h-5" /> },
-                            { title: 'Step 2: Strategic Context', icon: <TargetIcon className="w-5 h-5" /> },
-                            { title: 'Step 3: Partnership & Objectives', icon: <PuzzleIcon className="w-5 h-5" /> }
+                            'Step 1: Profile Setup',
+                            'Step 2: Strategic Context',
+                            'Step 3: Partnership & Objectives'
                         ]}
                     />
                     <PhaseCard
                         phase="Phase 2"
                         title="Analysis & Strategy"
-                        description="Configure your AI analysis team and run advanced diagnostics, including due diligence, risk assessment, and partner exploration."
+                        description="With your brief established, you will configure your AI analysis team and run a suite of advanced diagnostics, including automated due diligence, risk assessment, and partner exploration."
                         whyItMatters="Here, you move from planning to action. The system runs deep analysis to identify opportunities, vet partners, and quantify risks."
                         steps={[
-                            { title: 'Step 4: Analysis Configuration', icon: <BrainCircuitIcon className="w-5 h-5" /> },
-                            { title: 'Step 5: Due Diligence & Risk', icon: <ShieldCheckIcon className="w-5 h-5" /> },
-                            { title: 'Step 6: Partner Intelligence', icon: <UsersIcon className="w-5 h-5" /> }
+                            'Step 4: Analysis Configuration',
+                            'Step 5: Due Diligence & Risk',
+                            'Step 6: Partner Intelligence'
                         ]}
                     />
                     <PhaseCard
                         phase="Phase 3"
                         title="Execution & Planning"
-                        description="Move from analysis to action. Use tools to forecast growth, model stakeholder perspectives, and build a framework for strong relationships."
+                        description="This phase translates analysis into an actionable plan. You will access tools to build relationships, forecast growth, and model stakeholder perspectives to ensure your plan is robust."
                         whyItMatters="An opportunity is worthless without a plan. This phase builds the roadmap for successful execution and stakeholder management."
                         steps={[
-                            { title: 'Step 7: Relationship Building', icon: <UsersIcon className="w-5 h-5" /> },
-                            { title: 'Step 8: Implementation Roadmap', icon: <RoadmapIcon className="w-5 h-5" /> },
-                            { title: 'Step 9: Resource Allocation', icon: <PuzzleIcon className="w-5 h-5" /> }
+                            'Step 7: Relationship Building',
+                            'Step 8: Implementation Roadmap',
+                            'Step 9: Resource Allocation'
                         ]}
                     />
                     <PhaseCard
                         phase="Phase 4"
                         title="Finalization & Generation"
-                        description="Assess long-term viability, review all your inputs, and instruct the multi-agent AI to synthesize everything into a comprehensive Intelligence Blueprint."
+                        description="In the final phase, you will define key performance metrics, assess long-term sustainability, and after a final review, instruct the AI to synthesize all inputs into a comprehensive Intelligence Blueprint."
                         whyItMatters="The final step where all data points are synthesized into a single, cohesive, and actionable intelligence document ready for decision-makers."
                         steps={[
-                            { title: 'Step 10: Performance Metrics', icon: <TargetIcon className="w-5 h-5" /> },
-                            { title: 'Step 11: Sustainability & Final Setup', icon: <ShieldCheckIcon className="w-5 h-5" /> },
-                            { title: 'Step 12: Review & Generate', icon: <BlueprintIcon className="w-5 h-5" /> }
+                            'Step 10: Performance Metrics',
+                            'Step 11: Sustainability & Final Setup',
+                            'Step 12: Review & Generate'
                         ]}
                     />
                 </div>
             </section>
 
-            {/* What You Get Section */}
             <section>
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-extrabold text-gray-900 mb-4">The Outcome: A Partnership Toolkit</h2>
@@ -149,38 +141,11 @@ const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, cur
                 </div>
             </section>
 
-            {/* What Makes Nexus Different */}
-            <section>
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-extrabold text-gray-900 mb-4">What Makes Nexus Different?</h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                        We go beyond standard analysis by integrating predictive models that see what others miss.
-                    </p>
-                </div>
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div className="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-blue-500">
-                        <div className="flex items-center gap-4 mb-3">
-                            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center"><LightbulbIcon className="w-7 h-7" /></div>
-                            <h3 className="text-2xl font-bold text-gray-900">Latent Asset Identifier</h3>
-                        </div>
-                        <p className="text-gray-600">Our AI doesn't just catalog a region's visible assets. It identifies **symbiotic pairings** of seemingly unrelated strengths to uncover new, "latent" economic capabilities that no one is looking for, creating entirely new investment theses.</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-orange-500">
-                        <div className="flex items-center gap-4 mb-3">
-                            <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center"><CodeIcon className="w-7 h-7" /></div>
-                            <h3 className="text-2xl font-bold text-gray-900">Activation Velocity Score</h3>
-                        </div>
-                        <p className="text-gray-600">Capital follows confidence, but it stays for speed. We are the first to predict **"time-to-money"** by analyzing regulatory friction and bureaucratic speed, giving you a crucial metric for comparing opportunities that no one else provides.</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Call to Action */}
             <section className="text-center py-12">
                 <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-gray-200">
-                    <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Region's Future?</h2>
+                    <h2 className="text-3xl font-bold mb-4">Ready to Begin?</h2>
                     <p className="text-xl text-gray-600 mb-8">
-                        Proceed to review our terms of service and begin your journey into regional intelligence.
+                        Proceed to review our terms of service to access the report system.
                     </p>
                     <button
                         onClick={onProceedToTerms}
@@ -188,14 +153,13 @@ const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, cur
                     >
                         <div className="flex items-center gap-3 justify-center">
                             <BlueprintIcon className="w-6 h-6" />
-                            T&C report system
+                            T&C access to the report
                         </div>
                     </button>
                 </div>
             </section>
         </main>
 
-        {/* Footer */}
         <footer className="bg-gray-800 text-white py-8 mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <div className="flex justify-center mb-4">
@@ -210,4 +174,4 @@ const HowToUse: React.FC<HowToUseProps> = ({ onProceedToTerms, onViewChange, cur
   );
 };
 
-export default HowToUse;
+export default ReportSystemEntry;
